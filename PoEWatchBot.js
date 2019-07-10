@@ -1,6 +1,7 @@
 const config = require('./config/cfg.json');
 const tmi = require('tmi.js');
 const request = require('request');
+const fs = require('fs');
 global.__basedir = __dirname;
 var gem2120 = []
 var gem2123 = []
@@ -18,11 +19,24 @@ let options = {
         username: config.twitch.nick,
         password: config.twitch.oauth
     },
-    channels: ["#finncapp", "#sketch", "#ixixghostxixi", "#vertex101", "#vervamon"]
+    channels: ["#poewatchbot"]
 };
 let client = new tmi.client(options);
 // Connect the client to the server..
 client.connect();
+//join the channels from the json file
+client.on("connected", (address, port) => {
+    //TODO: loop through the json file to connect to the channels
+    fs.readFile('config/channel.json', (err, data) => {  
+        if (err) throw err;
+        let jChan = JSON.parse(data);
+        for (var key in jChan)
+        {
+            var juChan = jChan[key];
+            client.join(juChan);
+        }
+    });
+});
 client.on("chat", (channel, user, message, self) => {
     // Don't listen to my own messages..
     if (self) return;
@@ -152,7 +166,19 @@ client.on("chat", (channel, user, message, self) => {
     //join channel
     if(channel == "#poewatchbot") {
         if(msg[0] == "!join") {
-            client.join(msg[1]);
+            client.join(user.username);
+            //TODO: add teh channel into the json file
+            fs.readFile('config/channel.json', (err, data) => {  
+                var json = JSON.parse(data);
+                json['channel' + user.username] = "#" + user.username
+                console.log(JSON.stringify(json, null, 2))
+                fs.writeFile('config/channel.json', JSON.stringify(json, null, 2), (err) => {  
+                    if (err) throw err;
+                    setTimeout(function () {
+                        client.say(channel, "You have been added to the bot")
+                    }, 3000); 
+                });
+            });
         }
     }
 });
