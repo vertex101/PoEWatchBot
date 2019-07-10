@@ -1,0 +1,23 @@
+{
+  "name": "poewatchbot",
+  "version": "1.0.0",
+  "description": "A custom made Twitch Bot",
+  "main": "bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vertex101/PoEWatchBot.git"
+  },
+  "author": "Vertex101",
+  "license": "GNU General Public License v3.0",
+  "bugs": {
+    "url": "https://github.com/vertex101/PoEWatchBot/issues"
+  },
+  "homepage": "https://github.com/vertex101/PoEWatchBot#readme",
+  "dependencies": {
+    "requests": "^0.2.2",
+    "tmi.js": "^1.4.2"
+  }
+}
