@@ -158,10 +158,6 @@ client.on("chat", (channel, user, message, self) => {
                 }, 3000); 
             });
         }
-    } else {
-        setTimeout(function () {
-            client.say(channel, "You don't have permission to use the command!")
-        }, 3000); 
     }
     //join channel
     if(channel == "#poewatchbot") {
