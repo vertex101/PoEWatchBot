@@ -2,11 +2,7 @@ const config = require('./config/cfg.json');
 const tmi = require('tmi.js');
 const request = require('request');
 const fs = require('fs');
-global.__basedir = __dirname;
-var gem2120 = []
-var gem2123 = []
-var jewel = []
-var timeless = []
+var gem2120 = [], gem2123 = [], jewel = [], timeless = []
 let options = {
     options: {
         debug: true
