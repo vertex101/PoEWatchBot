@@ -44,7 +44,7 @@ client.on("chat", (channel, user, message, self) => {
             request('https://api.poe.watch/item?id=142', function (error, response, body) {
                 pullData = JSON.parse(body);
                 setTimeout(function () {
-                    client.say(channel, "1 Exalted Orb is equal to " + pullData.leagues[0].median + " Chaos")
+                    client.say(channel, "1 Exalted Orb is equal to " + pullData.leagues[0].mode + " Chaos")
                 }, 3000); 
             });
         }
@@ -168,12 +168,14 @@ client.on("chat", (channel, user, message, self) => {
                     var gem3 = fiveway[2].split(":")
                     var gem4 = fiveway[3].split(":")
                     var gem5 = fiveway[4].split(":")
+                    var totalfive = (Number(gem1[1]) + Number(gem2[1]) + Number(gem3[1]) + Number(gem4[1]) + Number(gem5[1]))
                     client.say(channel, "Emblem Costs 1) "
                         + gem1[0] + " - " + gem1[1]
                         + "c 2) " + gem2[0] + " - " + gem2[1]
                         + "c 3) " + gem3[0] + " - " + gem3[1]
                         + "c 4) " + gem4[0] + " - " + gem4[1]
-                        + "c 5) " + gem5[0] + " - " + gem5[1] + "c")
+                        + "c 5) " + gem5[0] + " - " + gem5[1]
+                        + "c " + "Total Cost: " + totalfive + "c")
                 }, 3000)
             });
         }
