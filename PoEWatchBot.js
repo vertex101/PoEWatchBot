@@ -179,6 +179,15 @@ client.on("chat", (channel, user, message, self) => {
                 }, 3000)
             });
         }
+        if(msg[0] == "!math") {
+            request('https://api.poe.watch/item?id=142', function (error, response, body) {
+                pullData = JSON.parse(body);
+                var cTotal = (pullData.leagues[0].mode * Number("0." + msg[1] + "0"))
+                setTimeout(function () {
+                    client.say(channel, "'." + msg[1] + "ex' is " + Math.round(cTotal) + "c")
+                }, 3000); 
+            });
+        }
     }
     //join channel
     if(channel == "#poewatchbot") {
