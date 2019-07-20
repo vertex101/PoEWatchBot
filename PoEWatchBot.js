@@ -179,7 +179,7 @@ client.on("chat", (channel, user, message, self) => {
                 }, 3000)
             });
         }
-        if(msg[0] == "!math") {
+        if(msg[0] == "!round") {
             request('https://api.poe.watch/item?id=142', function (error, response, body) {
                 pullData = JSON.parse(body);
                 var cTotal = (pullData.leagues[0].mode * Number("0." + msg[1] + "0"))
