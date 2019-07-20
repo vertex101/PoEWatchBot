@@ -40,6 +40,11 @@ client.on("chat", (channel, user, message, self) => {
     msg = message.split(" ");
     //PoE command things
     if(user.username == channel.replace("#", "") || user.username == "vertex101" || user.mod){
+        if(msg[0] == "!cmds") {
+            setTimeout(function () {
+                client.say(channel, "Current Commands: !ex, !23, !20, !jewel, !timeless, !hunter, !mirror, !5way, !round")
+            }, 3000); 
+        }
         if(msg[0] == "!ex") {
             request('https://api.poe.watch/item?id=142', function (error, response, body) {
                 pullData = JSON.parse(body);
