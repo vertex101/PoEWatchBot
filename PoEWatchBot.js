@@ -2,7 +2,7 @@ const config = require('./config/cfg.json');
 const tmi = require('tmi.js');
 const request = require('request');
 const fs = require('fs');
-var gem2120 = [], gem2123 = [], jewel = [], timeless = [], fiveway = []
+var gem2120 = [], gem2123 = [], jewel = [], timeless = [], fiveway = [], trusted = []
 let options = {
     options: {
         debug: true
@@ -32,6 +32,15 @@ client.on("connected", (address, port) => {
             client.join(juChan);
         }
     });
+    //TODO: load the list of trusted users
+    fs.readFile('config/trusted.json', (err, data) => {  
+        if (err) throw err;
+        let lTrust = JSON.parse(data);
+        for (var key in lTrust)
+        {
+            trusted.push(lTrust[key])
+        }
+    });
 });
 client.on("chat", (channel, user, message, self) => {
     // Don't listen to my own messages..
@@ -39,7 +48,7 @@ client.on("chat", (channel, user, message, self) => {
     // Do your stuff.
     msg = message.split(" ");
     //PoE command things
-    if(user.username == channel.replace("#", "") || user.username == "vertex101" || user.mod){
+    if(user.username == channel.replace("#", "") ||  trusted.includes(user.username) || user.mod){
         if(msg[0] == "!cmds") {
             setTimeout(function () {
                 client.say(channel, "Current Commands: !ex, !23, !20, !jewel, !timeless, !hunter, !mirror, !5way, !round")
@@ -197,6 +206,24 @@ client.on("chat", (channel, user, message, self) => {
                 setTimeout(function () {
                     client.say(channel, "Usage: !round [1-9]")
                 }, 3000);
+            }
+        }
+    }
+    //trusted command
+    if(user.username == "vertex101") {
+        if(msg[0] == "!trusted") {
+            if(msg[1] == "add") {
+                fs.readFile('config/trusted.json', (err, data) => {  
+                    var json = JSON.parse(data);
+                    json['trusted' + msg[3].toLowerCase()] = msg[3].toLowerCase()
+                    console.log(JSON.stringify(json, null, 2))
+                    fs.writeFile('config/trusted.json', JSON.stringify(json, null, 2), (err) => {  
+                        if (err) throw err;
+                        setTimeout(function () {
+                            client.say(channel, msg[3] + " you have been added to the trusted list")
+                        }, 3000); 
+                    });
+                });
             }
         }
     }
