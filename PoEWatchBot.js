@@ -185,13 +185,19 @@ client.on("chat", (channel, user, message, self) => {
             });
         }
         if(msg[0] == "!round") {
-            request('https://api.poe.watch/item?id=142', function (error, response, body) {
-                pullData = JSON.parse(body);
-                var cTotal = (pullData.leagues[0].mode * Number("0." + msg[1] + "0"))
+            if(msg[1]) {
+                request('https://api.poe.watch/item?id=142', function (error, response, body) {
+                    pullData = JSON.parse(body);
+                    var cTotal = (pullData.leagues[0].mode * Number("0." + msg[1] + "0"))
+                    setTimeout(function () {
+                        client.say(channel, "'." + msg[1] + "ex' is " + Math.round(cTotal) + "c")
+                    }, 3000); 
+                });
+            } else {
                 setTimeout(function () {
-                    client.say(channel, "'." + msg[1] + "ex' is " + Math.round(cTotal) + "c")
-                }, 3000); 
-            });
+                    client.say(channel, "Usage: !round [1-9]")
+                }, 3000);
+            }
         }
     }
     //join channel
