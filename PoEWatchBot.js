@@ -199,7 +199,7 @@ client.on("chat", (channel, user, message, self) => {
                     pullData = JSON.parse(body);
                     var cTotal = (pullData.leagues[0].mode * Number("0." + msg[1] + "0"))
                     setTimeout(function () {
-                        client.say(channel, "'." + msg[1] + "ex' is " + Math.round(cTotal) + "c")
+                        client.say(channel, "0." + msg[1] + "ex is " + Math.round(cTotal) + "c")
                     }, 3000); 
                 });
             } else {
