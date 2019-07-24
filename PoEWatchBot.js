@@ -226,6 +226,18 @@ client.on("chat", (channel, user, message, self) => {
                 });
             }
         }
+        if(msg[0] == "!vso") {
+            request({ url: 'https://api.twitch.tv/kraken/users?login=' + msg[1], headers: { 'Accept': 'application/vnd.twitchtv.v5+json', 'Client-ID': 'fn7455ahp22vanqg891498goqhnu6v'}}, function (error, response, body) {
+                pullData = JSON.parse(body);
+                request({ url: 'https://api.twitch.tv/kraken/channels/' + pullData.users[0]._id, headers: { 'Accept': 'application/vnd.twitchtv.v5+json', 'Client-ID': 'fn7455ahp22vanqg891498goqhnu6v'}}, function (error, response, body) {
+                    pullData = JSON.parse(body);
+                    setTimeout(function () {
+                        client.say(channel, "You should 100% check out " + msg[1] + "! You can find them," +
+                        "here >> https://twitch.tv/" + msg[1] + " <3 They were last playing >> " + pullData.game + "!")
+                    }, 3000);
+                });
+            });
+        }
     }
     //join channel
     if(channel == "#poewatchbot") {
