@@ -51,7 +51,7 @@ client.on("chat", (channel, user, message, self) => {
     if(user.username == channel.replace("#", "") ||  trusted.includes(user.username) || user.mod){
         if(msg[0] == "!cmds") {
             setTimeout(function () {
-                client.say(channel, "Current Commands: !ex, !23, !20, !jewel, !timeless, !hunter, !mirror, !5way, !round")
+                client.say(channel, "Current Commands: !ex, !23, !20, !jewel, !hunter, !mirror, !round")
             }, 3000); 
         }
         if(msg[0] == "!ex") {
@@ -63,7 +63,7 @@ client.on("chat", (channel, user, message, self) => {
             });
         }
         if(msg[0] == "!23") {
-            request("https://api.poe.watch/get?league=Legion&category=gem", function (error, responce, body) {
+            request("https://api.poe.watch/get?league=Blight&category=gem", function (error, responce, body) {
                 top523 = JSON.parse(body);
                 top523.forEach(function (fruit) {
                     if(fruit.gemLevel == "21" && fruit.gemQuality == "23" && fruit.change != "0") {
@@ -86,7 +86,7 @@ client.on("chat", (channel, user, message, self) => {
             });
         }
         if(msg[0] == "!20") {
-            request("https://api.poe.watch/get?league=Legion&category=gem", function (error, responce, body) {
+            request("https://api.poe.watch/get?league=Blight&category=gem", function (error, responce, body) {
                 top520 = JSON.parse(body);
                 top520.forEach(function (fruit) {
                     if(fruit.gemLevel == "21" && fruit.gemQuality == "20" && fruit.change != "0") {
@@ -109,7 +109,7 @@ client.on("chat", (channel, user, message, self) => {
             });
         }
         if(msg[0] == "!jewel") {
-            request("https://api.poe.watch/get?league=Legion&category=jewel", function (error, responce, body) {
+            request("https://api.poe.watch/get?league=Blight&category=jewel", function (error, responce, body) {
                 top520 = JSON.parse(body);
                 top520.forEach(function (fruit) {
                     jewel.push(fruit.name+":"+fruit.exalted.toFixed(2))
@@ -129,29 +129,6 @@ client.on("chat", (channel, user, message, self) => {
                 }, 3000)
             });
         }
-        if(msg[0] == "!timeless") {
-            request("https://api.poe.watch/get?league=Legion&category=jewel", function (error, responce, body) {
-                top520 = JSON.parse(body);
-                top520.forEach(function (fruit) {
-                    if(fruit.type == "Timeless Jewel") {
-                        timeless.push(fruit.name+":"+fruit.mean.toFixed(2))
-                    }
-                });
-                setTimeout(function() {
-                    var gem1 = timeless[0].split(":")
-                    var gem2 = timeless[1].split(":")
-                    var gem3 = timeless[2].split(":")
-                    var gem4 = timeless[3].split(":")
-                    var gem5 = timeless[4].split(":")
-                    client.say(channel, "Top 5 TIMELESS JEWELS 1) "
-                        + gem1[0] + " - " + gem1[1]
-                        + "c 2) " + gem2[0] + " - " + gem2[1]
-                        + "c 3) " + gem3[0] + " - " + gem3[1]
-                        + "c 4) " + gem4[0] + " - " + gem4[1]
-                        + "c 5) " + gem5[0] + " - " + gem5[1] + "c")
-                }, 3000)
-            });
-        }
         if(msg[0] == "!hunter") {
             request('https://api.poe.watch/item?id=3891', function (error, response, body) {
                 pullData = JSON.parse(body);
@@ -166,31 +143,6 @@ client.on("chat", (channel, user, message, self) => {
                 setTimeout(function () {
                     client.say(channel, "Mirror of Kalandra is worth " + pullData.leagues[0].exalted.toFixed(2) + "ex")
                 }, 3000); 
-            });
-        }
-        if(msg[0] == "!5way") {
-            request("https://api.poe.watch/get?league=Legion&category=map", function (error, responce, body) {
-                way5 = JSON.parse(body);
-                way5.forEach(function (maps) {
-                    if(maps.name.includes("Emblem")) {
-                        fiveway.push(maps.name+":"+maps.max.toFixed(2))
-                    }
-                });
-                setTimeout(function() {
-                    var gem1 = fiveway[0].split(":")
-                    var gem2 = fiveway[1].split(":")
-                    var gem3 = fiveway[2].split(":")
-                    var gem4 = fiveway[3].split(":")
-                    var gem5 = fiveway[4].split(":")
-                    var totalfive = (Number(gem1[1]) + Number(gem2[1]) + Number(gem3[1]) + Number(gem4[1]) + Number(gem5[1]))
-                    client.say(channel, "Emblem Costs 1) "
-                        + gem1[0] + " - " + gem1[1]
-                        + "c 2) " + gem2[0] + " - " + gem2[1]
-                        + "c 3) " + gem3[0] + " - " + gem3[1]
-                        + "c 4) " + gem4[0] + " - " + gem4[1]
-                        + "c 5) " + gem5[0] + " - " + gem5[1]
-                        + "c " + "Total Cost: " + totalfive + "c")
-                }, 3000)
             });
         }
         if(msg[0] == "!round") {
@@ -227,13 +179,13 @@ client.on("chat", (channel, user, message, self) => {
             }
         }
         if(msg[0] == "!vso") {
-            request({ url: 'https://api.twitch.tv/kraken/users?login=' + msg[1], headers: { 'Accept': 'application/vnd.twitchtv.v5+json', 'Client-ID': 'fn7455ahp22vanqg891498goqhnu6v'}}, function (error, response, body) {
+            request({ url: 'https://api.twitch.tv/kraken/users?login=' + msg[1].toLowerCase(), headers: { 'Accept': 'application/vnd.twitchtv.v5+json', 'Client-ID': config.twitch.client}}, function (error, response, body) {
                 pullData = JSON.parse(body);
-                request({ url: 'https://api.twitch.tv/kraken/channels/' + pullData.users[0]._id, headers: { 'Accept': 'application/vnd.twitchtv.v5+json', 'Client-ID': 'fn7455ahp22vanqg891498goqhnu6v'}}, function (error, response, body) {
+                request({ url: 'https://api.twitch.tv/kraken/channels/' + pullData.users[0]._id, headers: { 'Accept': 'application/vnd.twitchtv.v5+json', 'Client-ID': config.twitch.client}}, function (error, response, body) {
                     pullData = JSON.parse(body);
                     setTimeout(function () {
                         client.say(channel, "You should 100% check out " + msg[1] + "! You can find them," +
-                        "here >> https://twitch.tv/" + msg[1] + " <3 They were last playing >> " + pullData.game + "!")
+                        "here >> https://twitch.tv/" + msg[1].toLowerCase() + " <3 They were last playing >> " + pullData.game + "!")
                     }, 3000);
                 });
             });
