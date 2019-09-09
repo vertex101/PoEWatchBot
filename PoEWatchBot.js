@@ -66,7 +66,7 @@ client.on("chat", (channel, user, message, self) => {
             request("https://api.poe.watch/get?league=Blight&category=gem", function (error, responce, body) {
                 top523 = JSON.parse(body);
                 top523.forEach(function (fruit) {
-                    if(fruit.gemLevel == "21" && fruit.gemQuality == "23" && fruit.change != "0") {
+                    if(fruit.gemLevel == "21" && fruit.gemQuality == "23") { // && fruit.change != "0"
                         gem2123.push(fruit.name+":"+fruit.exalted.toFixed(2))
                     }
                 });
@@ -89,7 +89,7 @@ client.on("chat", (channel, user, message, self) => {
             request("https://api.poe.watch/get?league=Blight&category=gem", function (error, responce, body) {
                 top520 = JSON.parse(body);
                 top520.forEach(function (fruit) {
-                    if(fruit.gemLevel == "21" && fruit.gemQuality == "20" && fruit.change != "0") {
+                    if(fruit.gemLevel == "21" && fruit.gemQuality == "20") { //&& fruit.change != "0"
                         gem2120.push(fruit.name+":"+fruit.exalted.toFixed(2))
                     }
                 });
