@@ -2,7 +2,7 @@ const config = require('./config/cfg.json');
 const tmi = require('tmi.js');
 const request = require('request');
 const fs = require('fs');
-var gem2120 = [], gem2123 = [], jewel = [], timeless = [], fiveway = [], trusted = []
+var gem2120 = [], gem2123 = [], jewel = [], timeless = [], fiveway = [], trusted = [], sale = []
 let options = {
     options: {
         debug: true
@@ -143,6 +143,17 @@ client.on("chat", (channel, user, message, self) => {
                 setTimeout(function () {
                     client.say(channel, "Mirror of Kalandra is worth " + pullData.leagues[0].exalted.toFixed(2) + "ex")
                 }, 3000); 
+            });
+        }
+        if(msg[0] == "!sale") {
+            request("https://api.poe.watch/listings?league=Blight&account=FinnCapp", function (error, responce, body) {
+                itemsale = JSON.parse(body);
+                itemsale.forEach(function (sitem) {
+                    sale.push(sitem.name+": "+sitem.buyout[0].chaos+"c")
+                });
+                setTimeout(function() {
+                    client.say(channel, "Items For Sale - " + sale.toString())
+                }, 3000)
             });
         }
         if(msg[0] == "!round") {
