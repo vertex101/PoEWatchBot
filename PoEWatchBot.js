@@ -2,7 +2,7 @@ const config = require('./config/cfg.json');
 const tmi = require('tmi.js');
 const request = require('request');
 const fs = require('fs');
-var gem2120 = [], gem2123 = [], jewel = [], timeless = [], fiveway = [], trusted = [], sale = []
+var gem2120 = [], gem2123 = []
 let options = {
     options: {
         debug: true
@@ -15,7 +15,7 @@ let options = {
         username: config.twitch.nick,
         password: config.twitch.oauth
     },
-    channels: ["#poewatchbot"]
+    channels: ["#vertex101"]
 };
 let client = new tmi.client(options);
 // Connect the client to the server..
@@ -32,15 +32,6 @@ client.on("connected", (address, port) => {
             client.join(juChan);
         }
     });
-    //TODO: load the list of trusted users
-    fs.readFile('config/trusted.json', (err, data) => {  
-        if (err) throw err;
-        let lTrust = JSON.parse(data);
-        for (var key in lTrust)
-        {
-            trusted.push(lTrust[key])
-        }
-    });
 });
 client.on("chat", (channel, user, message, self) => {
     // Don't listen to my own messages..
@@ -48,10 +39,10 @@ client.on("chat", (channel, user, message, self) => {
     // Do your stuff.
     msg = message.split(" ");
     //PoE command things
-    if(user.username == channel.replace("#", "") ||  trusted.includes(user.username) || user.mod){
+    if(user.username == channel.replace("#", "") ||  user.mod || user.username == "vertex101"){
         if(msg[0] == "!cmds") {
             setTimeout(function () {
-                client.say(channel, "Current Commands: !ex, !23, !20, !jewel, !hunter, !mirror, !round")
+                client.say(channel, "Current Commands: !ex, !23, !20, !hunter, !mirror, !round")
             }, 3000); 
         }
         if(msg[0] == "!ex") {
@@ -108,27 +99,6 @@ client.on("chat", (channel, user, message, self) => {
                 }, 3000)
             });
         }
-        if(msg[0] == "!jewel") {
-            request("https://api.poe.watch/get?league=Blight&category=jewel", function (error, responce, body) {
-                top520 = JSON.parse(body);
-                top520.forEach(function (fruit) {
-                    jewel.push(fruit.name+":"+fruit.exalted.toFixed(2))
-                });
-                setTimeout(function() {
-                    var gem1 = jewel[0].split(":")
-                    var gem2 = jewel[1].split(":")
-                    var gem3 = jewel[2].split(":")
-                    var gem4 = jewel[3].split(":")
-                    var gem5 = jewel[4].split(":")
-                    client.say(channel, "Top 5 JEWELS 1) "
-                        + gem1[0] + " - " + gem1[1]
-                        + "ex 2) " + gem2[0] + " - " + gem2[1]
-                        + "ex 3) " + gem3[0] + " - " + gem3[1]
-                        + "ex 4) " + gem4[0] + " - " + gem4[1]
-                        + "ex 5) " + gem5[0] + " - " + gem5[1] + "ex")
-                }, 3000)
-            });
-        }
         if(msg[0] == "!hunter") {
             request('https://api.poe.watch/item?id=3891', function (error, response, body) {
                 pullData = JSON.parse(body);
@@ -143,17 +113,6 @@ client.on("chat", (channel, user, message, self) => {
                 setTimeout(function () {
                     client.say(channel, "Mirror of Kalandra is worth " + pullData.leagues[0].exalted.toFixed(2) + "ex")
                 }, 3000); 
-            });
-        }
-        if(msg[0] == "!sale") {
-            request("https://api.poe.watch/listings?league=Blight&account=FinnCapp", function (error, responce, body) {
-                itemsale = JSON.parse(body);
-                itemsale.forEach(function (sitem) {
-                    sale.push(sitem.name+": "+sitem.buyout[0].chaos+"c")
-                });
-                setTimeout(function() {
-                    client.say(channel, "Items For Sale - " + sale.toString())
-                }, 3000)
             });
         }
         if(msg[0] == "!round") {
@@ -174,21 +133,6 @@ client.on("chat", (channel, user, message, self) => {
     }
     //trusted command
     if(user.username == "vertex101") {
-        if(msg[0] == "!trusted") {
-            if(msg[1] == "add") {
-                fs.readFile('config/trusted.json', (err, data) => {  
-                    var json = JSON.parse(data);
-                    json['trusted' + msg[3].toLowerCase()] = msg[3].toLowerCase()
-                    console.log(JSON.stringify(json, null, 2))
-                    fs.writeFile('config/trusted.json', JSON.stringify(json, null, 2), (err) => {  
-                        if (err) throw err;
-                        setTimeout(function () {
-                            client.say(channel, msg[3] + " you have been added to the trusted list")
-                        }, 3000); 
-                    });
-                });
-            }
-        }
         if(msg[0] == "!vso") {
             request({ url: 'https://api.twitch.tv/kraken/users?login=' + msg[1].toLowerCase(), headers: { 'Accept': 'application/vnd.twitchtv.v5+json', 'Client-ID': config.twitch.client}}, function (error, response, body) {
                 pullData = JSON.parse(body);
@@ -198,24 +142,6 @@ client.on("chat", (channel, user, message, self) => {
                         client.say(channel, "You should 100% check out " + msg[1] + "! You can find them," +
                         "here >> https://twitch.tv/" + msg[1].toLowerCase() + " <3 They were last playing >> " + pullData.game + "!")
                     }, 3000);
-                });
-            });
-        }
-    }
-    //join channel
-    if(channel == "#poewatchbot") {
-        if(msg[0] == "!join") {
-            client.join(user.username);
-            //TODO: add teh channel into the json file
-            fs.readFile('config/channel.json', (err, data) => {  
-                var json = JSON.parse(data);
-                json['channel' + user.username] = "#" + user.username
-                console.log(JSON.stringify(json, null, 2))
-                fs.writeFile('config/channel.json', JSON.stringify(json, null, 2), (err) => {  
-                    if (err) throw err;
-                    setTimeout(function () {
-                        client.say(channel, "You have been added to the bot")
-                    }, 3000); 
                 });
             });
         }
