@@ -42,7 +42,7 @@ client.on("chat", (channel, user, message, self) => {
     if(user.username == channel.replace("#", "") ||  user.mod || user.username == "vertex101"){
         if(msg[0] == "!cmds") {
             setTimeout(function () {
-                client.say(channel, "Current Commands: !ex, !23, !20, !hunter, !mirror, !round")
+                client.say(channel, "Current Commands: !ex, !23, !20, !hunter, !doc, !mirror, !round")
             }, 3000); 
         }
         if(msg[0] == "!ex") {
@@ -54,7 +54,7 @@ client.on("chat", (channel, user, message, self) => {
             });
         }
         if(msg[0] == "!23") {
-            request("https://api.poe.watch/get?league=Blight&category=gem", function (error, responce, body) {
+            request("https://api.poe.watch/get?league=Metamorph&category=gem", function (error, responce, body) {
                 top523 = JSON.parse(body);
                 top523.forEach(function (fruit) {
                     if(fruit.gemLevel == "21" && fruit.gemQuality == "23") { // && fruit.change != "0"
@@ -77,7 +77,7 @@ client.on("chat", (channel, user, message, self) => {
             });
         }
         if(msg[0] == "!20") {
-            request("https://api.poe.watch/get?league=Blight&category=gem", function (error, responce, body) {
+            request("https://api.poe.watch/get?league=Metamorph&category=gem", function (error, responce, body) {
                 top520 = JSON.parse(body);
                 top520.forEach(function (fruit) {
                     if(fruit.gemLevel == "21" && fruit.gemQuality == "20") { //&& fruit.change != "0"
@@ -107,6 +107,14 @@ client.on("chat", (channel, user, message, self) => {
                 }, 3000); 
             });
         }
+        if(msg[0] == "!doc") {
+            request('https://api.poe.watch/item?id=3509', function (error, response, body) {
+                pullData = JSON.parse(body);
+                setTimeout(function () {
+                    client.say(channel, "The Doctor is worth " + pullData.leagues[0].exalted.toFixed(2) + "ex")
+                }, 3000); 
+            });
+        }
         if(msg[0] == "!mirror") {
             request('https://api.poe.watch/item?id=3283', function (error, response, body) {
                 pullData = JSON.parse(body);
@@ -130,8 +138,12 @@ client.on("chat", (channel, user, message, self) => {
                 }, 3000);
             }
         }
+        if(msg[0] == "!coc") { //https://www.youtube.com/watch?v=UqC4WM7am20
+            setTimeout(function () {
+                client.say(channel, "Cast on Critical Strike Assassin [Cyclone] by Esoro https://www.youtube.com/watch?v=UqC4WM7am20 the PoB is in the video description")
+            }, 3000);
+        }
     }
-    //trusted command
     if(user.username == "vertex101") {
         if(msg[0] == "!vso") {
             request({ url: 'https://api.twitch.tv/kraken/users?login=' + msg[1].toLowerCase(), headers: { 'Accept': 'application/vnd.twitchtv.v5+json', 'Client-ID': config.twitch.client}}, function (error, response, body) {
@@ -140,10 +152,15 @@ client.on("chat", (channel, user, message, self) => {
                     pullData = JSON.parse(body);
                     setTimeout(function () {
                         client.say(channel, "You should 100% check out " + msg[1] + "! You can find them," +
-                        "here >> https://twitch.tv/" + msg[1].toLowerCase() + " <3 They were last playing >> " + pullData.game + "!")
+                        " here >> https://twitch.tv/" + msg[1].toLowerCase() + " <3 They were last playing >> " + pullData.game + "!")
                     }, 3000);
                 });
             });
+        }
+        if(msg[0] == "!bpop") { //
+            setTimeout(function () {
+                client.say(channel, "Bane POP build by mbXtreme https://www.youtube.com/watch?v=RDJqEdWqdAE the PoB is in the video description")
+            }, 3000);
         }
     }
 });
