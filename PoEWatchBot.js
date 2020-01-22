@@ -43,10 +43,10 @@ client.on("chat", async (channel, user, message, self) => {
     if(user.username == channel.replace("#", "") ||  user.mod || user.username == "vertex101"){
         if(command == "cmds") {
             if(channel == "#finncapp") {
-                client.say(channel, "Current Commands: !ex, !23, !awakened !20, !hunter, !doc, !mirror, !round, !chaos, !exc, !starter")
+                client.say(channel, "Current Commands: !ex, !23, !awakened, !20, !hunter, !doc, !mirror, !round, !chaos, !exc, !starter")
             } else {
                 setTimeout(function () {
-                    client.say(channel, "Current Commands: !ex, !23, !20, !hunter, !doc, !mirror, !round, !chaos, !exc, !starter")
+                    client.say(channel, "Current Commands: !ex, !23, !awakened, !20, !hunter, !doc, !mirror, !round, !chaos, !exc, !starter")
                 }, 3000); 
             }
         }
