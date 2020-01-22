@@ -42,16 +42,24 @@ client.on("chat", async (channel, user, message, self) => {
     const command = args.shift().toLowerCase();
     if(user.username == channel.replace("#", "") ||  user.mod || user.username == "vertex101"){
         if(command == "cmds") {
-            setTimeout(function () {
-                client.say(channel, "Current Commands: !ex, !23, !20, !hunter, !doc, !mirror, !round, !chaos, !starter")
-            }, 3000); 
+            if(channel == "#finncapp") {
+                client.say(channel, "Current Commands: !ex, !23, !awakened !20, !hunter, !doc, !mirror, !round, !chaos, !exc, !starter")
+            } else {
+                setTimeout(function () {
+                    client.say(channel, "Current Commands: !ex, !23, !20, !hunter, !doc, !mirror, !round, !chaos, !exc, !starter")
+                }, 3000); 
+            }
         }
         if(command == "ex") {
             request('https://api.poe.watch/item?id=142', function (error, response, body) {
                 pullData = JSON.parse(body);
-                setTimeout(function () {
+                if(channel == "#finncapp") {
                     client.say(channel, "1 Exalted Orb is equal to " + pullData.leagues[0].mode + " Chaos")
-                }, 3000); 
+                } else {
+                    setTimeout(function () {
+                        client.say(channel, "1 Exalted Orb is equal to " + pullData.leagues[0].mode + " Chaos")
+                    }, 3000);
+                }
             });
         }
         if(command == "23") {
@@ -62,19 +70,33 @@ client.on("chat", async (channel, user, message, self) => {
                         gem2123.push(fruit.name+":"+fruit.exalted.toFixed(2))
                     }
                 });
-                setTimeout(function() {
+                if(channel == "#finncapp") {
                     var gem1 = gem2123[0].split(":")
-                    var gem2 = gem2123[1].split(":")
-                    var gem3 = gem2123[2].split(":")
-                    var gem4 = gem2123[3].split(":")
-                    var gem5 = gem2123[4].split(":")
-                    client.say(channel, "Top 5 21/23 GEMS 1) "
-                        + gem1[0] + " - " + gem1[1]
-                        + "ex 2) " + gem2[0] + " - " + gem2[1]
-                        + "ex 3) " + gem3[0] + " - " + gem3[1]
-                        + "ex 4) " + gem4[0] + " - " + gem4[1]
-                        + "ex 5) " + gem5[0] + " - " + gem5[1] + "ex")
-                }, 3000)
+                        var gem2 = gem2123[1].split(":")
+                        var gem3 = gem2123[2].split(":")
+                        var gem4 = gem2123[3].split(":")
+                        var gem5 = gem2123[4].split(":")
+                        client.say(channel, "Top 5 21/23 GEMS 1) "
+                            + gem1[0] + " - " + gem1[1]
+                            + "ex 2) " + gem2[0] + " - " + gem2[1]
+                            + "ex 3) " + gem3[0] + " - " + gem3[1]
+                            + "ex 4) " + gem4[0] + " - " + gem4[1]
+                            + "ex 5) " + gem5[0] + " - " + gem5[1] + "ex")
+                } else {
+                    setTimeout(function() {
+                        var gem1 = gem2123[0].split(":")
+                        var gem2 = gem2123[1].split(":")
+                        var gem3 = gem2123[2].split(":")
+                        var gem4 = gem2123[3].split(":")
+                        var gem5 = gem2123[4].split(":")
+                        client.say(channel, "Top 5 21/23 GEMS 1) "
+                            + gem1[0] + " - " + gem1[1]
+                            + "ex 2) " + gem2[0] + " - " + gem2[1]
+                            + "ex 3) " + gem3[0] + " - " + gem3[1]
+                            + "ex 4) " + gem4[0] + " - " + gem4[1]
+                            + "ex 5) " + gem5[0] + " - " + gem5[1] + "ex")
+                    }, 3000)
+                }
             });
         }
         if(command == "awakened") {
@@ -85,19 +107,33 @@ client.on("chat", async (channel, user, message, self) => {
                     gemAwake.push(fruit.name+":"+fruit.exalted.toFixed(2))
                     }
                 });
-                setTimeout(function() {
+                if(channel == "#finncapp") {
                     var gem1 = gemAwake[0].split(":")
-                    var gem2 = gemAwake[1].split(":")
-                    var gem3 = gemAwake[2].split(":")
-                    var gem4 = gemAwake[3].split(":")
-                    var gem5 = gemAwake[4].split(":")
-                    client.say(channel, "Top 5 Awakened GEMS 1) "
-                        + gem1[0] + " - " + gem1[1]
-                        + "ex 2) " + gem2[0] + " - " + gem2[1]
-                        + "ex 3) " + gem3[0] + " - " + gem3[1]
-                        + "ex 4) " + gem4[0] + " - " + gem4[1]
-                        + "ex 5) " + gem5[0] + " - " + gem5[1] + "ex")
-                }, 3000)
+                        var gem2 = gemAwake[1].split(":")
+                        var gem3 = gemAwake[2].split(":")
+                        var gem4 = gemAwake[3].split(":")
+                        var gem5 = gemAwake[4].split(":")
+                        client.say(channel, "Top 5 Awakened GEMS 1) "
+                            + gem1[0] + " - " + gem1[1]
+                            + "ex 2) " + gem2[0] + " - " + gem2[1]
+                            + "ex 3) " + gem3[0] + " - " + gem3[1]
+                            + "ex 4) " + gem4[0] + " - " + gem4[1]
+                            + "ex 5) " + gem5[0] + " - " + gem5[1] + "ex")
+                } else {
+                    setTimeout(function() {
+                        var gem1 = gemAwake[0].split(":")
+                        var gem2 = gemAwake[1].split(":")
+                        var gem3 = gemAwake[2].split(":")
+                        var gem4 = gemAwake[3].split(":")
+                        var gem5 = gemAwake[4].split(":")
+                        client.say(channel, "Top 5 Awakened GEMS 1) "
+                            + gem1[0] + " - " + gem1[1]
+                            + "ex 2) " + gem2[0] + " - " + gem2[1]
+                            + "ex 3) " + gem3[0] + " - " + gem3[1]
+                            + "ex 4) " + gem4[0] + " - " + gem4[1]
+                            + "ex 5) " + gem5[0] + " - " + gem5[1] + "ex")
+                    }, 3000) 
+                } 
             });
         }
         if(command == "20") {
@@ -108,43 +144,69 @@ client.on("chat", async (channel, user, message, self) => {
                         gem2120.push(fruit.name+":"+fruit.exalted.toFixed(2))
                     }
                 });
-                setTimeout(function() {
+                if(channel == "#finncapp") {
                     var gem1 = gem2120[0].split(":")
-                    var gem2 = gem2120[1].split(":")
-                    var gem3 = gem2120[2].split(":")
-                    var gem4 = gem2120[3].split(":")
-                    var gem5 = gem2120[4].split(":")
-                    client.say(channel, "Top 5 21/20 GEMS 1) "
-                        + gem1[0] + " - " + gem1[1]
-                        + "ex 2) " + gem2[0] + " - " + gem2[1]
-                        + "ex 3) " + gem3[0] + " - " + gem3[1]
-                        + "ex 4) " + gem4[0] + " - " + gem4[1]
-                        + "ex 5) " + gem5[0] + " - " + gem5[1] + "ex")
-                }, 3000)
+                        var gem2 = gem2120[1].split(":")
+                        var gem3 = gem2120[2].split(":")
+                        var gem4 = gem2120[3].split(":")
+                        var gem5 = gem2120[4].split(":")
+                        client.say(channel, "Top 5 21/20 GEMS 1) "
+                            + gem1[0] + " - " + gem1[1]
+                            + "ex 2) " + gem2[0] + " - " + gem2[1]
+                            + "ex 3) " + gem3[0] + " - " + gem3[1]
+                            + "ex 4) " + gem4[0] + " - " + gem4[1]
+                            + "ex 5) " + gem5[0] + " - " + gem5[1] + "ex")
+                } else {
+                    setTimeout(function() {
+                        var gem1 = gem2120[0].split(":")
+                        var gem2 = gem2120[1].split(":")
+                        var gem3 = gem2120[2].split(":")
+                        var gem4 = gem2120[3].split(":")
+                        var gem5 = gem2120[4].split(":")
+                        client.say(channel, "Top 5 21/20 GEMS 1) "
+                            + gem1[0] + " - " + gem1[1]
+                            + "ex 2) " + gem2[0] + " - " + gem2[1]
+                            + "ex 3) " + gem3[0] + " - " + gem3[1]
+                            + "ex 4) " + gem4[0] + " - " + gem4[1]
+                            + "ex 5) " + gem5[0] + " - " + gem5[1] + "ex")
+                    }, 3000)
+                } 
             });
         }
         if(command == "hunter") {
             request('https://api.poe.watch/item?id=3891', function (error, response, body) {
                 pullData = JSON.parse(body);
-                setTimeout(function () {
+                if(channel == "#finncapp") {
                     client.say(channel, "HeadHunter is worth " + pullData.leagues[0].exalted.toFixed(2) + "ex")
-                }, 3000); 
+                } else {
+                    setTimeout(function () {
+                        client.say(channel, "HeadHunter is worth " + pullData.leagues[0].exalted.toFixed(2) + "ex")
+                    }, 3000);  
+                }
             });
         }
         if(command == "doc") {
             request('https://api.poe.watch/item?id=3509', function (error, response, body) {
                 pullData = JSON.parse(body);
-                setTimeout(function () {
+                if(channel == "#finncapp") {
                     client.say(channel, "The Doctor is worth " + pullData.leagues[0].exalted.toFixed(2) + "ex")
-                }, 3000); 
+                } else {
+                    setTimeout(function () {
+                        client.say(channel, "The Doctor is worth " + pullData.leagues[0].exalted.toFixed(2) + "ex")
+                    }, 3000);
+                }
             });
         }
         if(command == "mirror") {
             request('https://api.poe.watch/item?id=3283', function (error, response, body) {
                 pullData = JSON.parse(body);
-                setTimeout(function () {
+                if(channel == "#finncapp") {
                     client.say(channel, "Mirror of Kalandra is worth " + pullData.leagues[0].exalted.toFixed(2) + "ex")
-                }, 3000); 
+                } else {
+                    setTimeout(function () {
+                        client.say(channel, "Mirror of Kalandra is worth " + pullData.leagues[0].exalted.toFixed(2) + "ex")
+                    }, 3000); 
+                } 
             });
         }
         if(command == "round") {
@@ -152,9 +214,13 @@ client.on("chat", async (channel, user, message, self) => {
                 request('https://api.poe.watch/item?id=142', function (error, response, body) {
                     pullData = JSON.parse(body);
                     var cTotal = (pullData.leagues[0].mode * Number("0." + args[0] + "0"))
-                    setTimeout(function () {
+                    if(channel == "#finncapp") {
                         client.say(channel, "0." + args[0] + "ex is " + Math.round(cTotal) + "c")
-                    }, 3000); 
+                    } else {
+                        setTimeout(function () {
+                            client.say(channel, "0." + args[0] + "ex is " + Math.round(cTotal) + "c")
+                        }, 3000);
+                    } 
                 });
             } else {
                 setTimeout(function () {
@@ -171,9 +237,13 @@ client.on("chat", async (channel, user, message, self) => {
                     request('https://api.poe.watch/item?id=142', function (error, response, body) {
                         pullData = JSON.parse(body);
                         var cChaos = (pullData.leagues[0].mode * Number("0." + getOdds[0]))
-                        setTimeout(function () {
+                        if(channel == "#finncapp") {
                             client.say(channel, args[0]+"c = " + getOdds[0] + "ex " + cChaos + "c")
-                        }, 3000); 
+                        } else {
+                            setTimeout(function () {
+                                client.say(channel, args[0]+"c = " + getOdds[0] + "ex " + cChaos + "c")
+                            }, 3000); 
+                        }
                     });
                 });
             } else {
@@ -189,9 +259,13 @@ client.on("chat", async (channel, user, message, self) => {
                     var getARG = args[0].split('.')
                     var cTotal = (Number(getARG[0]) * pullData.leagues[0].mode)
                     var getOdds = (pullData.leagues[0].mode * Number("0." + getARG[1]))
-                    setTimeout(function () {
-                        client.say(channel, args[0]+"ex = " + (cTotal + getOdds) + "c")
-                    }, 3000); 
+                    if(channel == "#finncapp") {
+                        client.say(channel, args[0]+"ex = " + Math.round(cTotal + getOdds) + "c")
+                    } else {
+                        setTimeout(function () {
+                            client.say(channel, args[0]+"ex = " + Math.round(cTotal + getOdds) + "c")
+                        }, 3000); 
+                    }
                 });
             } else {
                 setTimeout(function () {
@@ -200,9 +274,13 @@ client.on("chat", async (channel, user, message, self) => {
             }
         }
         if(command == "starter") { //https://www.youtube.com/watch?v=2JPVJIn98B4
-            setTimeout(function () {
+            if(channel == "#finncapp") {
                 client.say(channel, "New to PoE (Path of Exile) go here https://www.youtube.com/watch?v=2JPVJIn98B4 and watch Beginner Guide + Zizaran's Tips and Tricks")
-            }, 3000);
+            } else {
+                setTimeout(function () {
+                    client.say(channel, "New to PoE (Path of Exile) go here https://www.youtube.com/watch?v=2JPVJIn98B4 and watch Beginner Guide + Zizaran's Tips and Tricks")
+                }, 3000);
+            }
         }
     }
     if(user.username == "vertex101") {
