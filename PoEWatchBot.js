@@ -168,7 +168,6 @@ client.on("chat", async (channel, user, message, self) => {
                     pullData = JSON.parse(body);
                     var cTotal = (Number(args[0]) / pullData.leagues[0].mode)
                     var getOdds = cTotal.toFixed(2).split('.')
-                    console.log(getOdds)
                     request('https://api.poe.watch/item?id=142', function (error, response, body) {
                         pullData = JSON.parse(body);
                         var cChaos = (pullData.leagues[0].mode * Number("0." + getOdds[0]))
@@ -180,6 +179,23 @@ client.on("chat", async (channel, user, message, self) => {
             } else {
                 setTimeout(function () {
                     client.say(channel, "Usage: !chaos [amount]")
+                }, 3000);
+            }
+        }
+        if(command == "exc") {
+            if(args[0]) {
+                request('https://api.poe.watch/item?id=142', function (error, response, body) {
+                    pullData = JSON.parse(body);
+                    var getARG = args[0].split('.')
+                    var cTotal = (Number(getARG[0]) * pullData.leagues[0].mode)
+                    var getOdds = (pullData.leagues[0].mode * Number("0." + getARG[1]))
+                    setTimeout(function () {
+                        client.say(channel, args[0]+"ex = " + (cTotal + getOdds) + "c")
+                    }, 3000); 
+                });
+            } else {
+                setTimeout(function () {
+                    client.say(channel, "Usage: !exc [amount]")
                 }, 3000);
             }
         }
