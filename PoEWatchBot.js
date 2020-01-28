@@ -238,10 +238,10 @@ client.on("chat", async (channel, user, message, self) => {
                         pullData = JSON.parse(body);
                         var cChaos = (pullData.leagues[0].mode * Number("0." + getOdds[0]))
                         if(channel == "#finncapp") {
-                            client.say(channel, args[0]+"c = " + getOdds[0] + "ex " + cChaos + "c")
+                            client.say(channel, args[0]+"c = " + getOdds[0] + "ex " + Math.round(cChaos) + "c")
                         } else {
                             setTimeout(function () {
-                                client.say(channel, args[0]+"c = " + getOdds[0] + "ex " + cChaos + "c")
+                                client.say(channel, args[0]+"c = " + getOdds[0] + "ex " + Math.round(cChaos) + "c")
                             }, 3000); 
                         }
                     });
@@ -302,6 +302,9 @@ client.on("chat", async (channel, user, message, self) => {
             setTimeout(function () {
                 client.say(channel, "Bane POP build by mbXtreme https://www.youtube.com/watch?v=RDJqEdWqdAE the PoB is in the video description")
             }, 3000);
+        }
+        if(command == "join") {
+            client.join(args[0])
         }
     }
     if(channel == "#sketch") {
