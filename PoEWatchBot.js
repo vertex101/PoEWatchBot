@@ -234,13 +234,16 @@ client.on("chat", async (channel, user, message, self) => {
                     pullData = JSON.parse(body);
                     var cTotal = (Number(args[0]) / pullData.leagues[0].mode)
                     var getOdds = cTotal.toFixed(2).split('.')
+                    console.log('Post Message #1')
                     request('https://api.poe.watch/item?id=142', function (error, response, body) {
                         pullData = JSON.parse(body);
-                        var cChaos = (pullData.leagues[0].mode * Number("0." + getOdds[0]))
+                        var cChaos = (pullData.leagues[0].mode * Number("0." + getOdds[1]))
                         if(channel == "#finncapp") {
+                            console.log('Post Message #2')
                             client.say(channel, args[0]+"c = " + getOdds[0] + "ex " + Math.round(cChaos) + "c")
                         } else {
                             setTimeout(function () {
+                                console.log('Post Message #3')
                                 client.say(channel, args[0]+"c = " + getOdds[0] + "ex " + Math.round(cChaos) + "c")
                             }, 3000); 
                         }
