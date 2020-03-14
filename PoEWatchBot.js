@@ -63,7 +63,7 @@ client.on("chat", async (channel, user, message, self) => {
             });
         }
         if(command == "23") {
-            request("https://api.poe.watch/get?league=Metamorph&category=gem", function (error, responce, body) {
+            request("https://api.poe.watch/get?league=Delirium&category=gem", function (error, responce, body) {
                 top523 = JSON.parse(body);
                 top523.forEach(function (fruit) {
                     if(fruit.gemLevel == "21" && fruit.gemQuality == "23") { // && fruit.change != "0"
@@ -100,7 +100,7 @@ client.on("chat", async (channel, user, message, self) => {
             });
         }
         if(command == "awakened") {
-            request("https://api.poe.watch/get?league=Metamorph&category=gem", function (error, responce, body) {
+            request("https://api.poe.watch/get?league=Delirium&category=gem", function (error, responce, body) {
                 topAwak = JSON.parse(body);
                 topAwak.forEach(function (fruit) {
                     if(fruit.name.includes("Awakened") && fruit.gemQuality == "20") { // && fruit.change != "0"
@@ -137,7 +137,7 @@ client.on("chat", async (channel, user, message, self) => {
             });
         }
         if(command == "20") {
-            request("https://api.poe.watch/get?league=Metamorph&category=gem", function (error, responce, body) {
+            request("https://api.poe.watch/get?league=Delirium&category=gem", function (error, responce, body) {
                 top520 = JSON.parse(body);
                 top520.forEach(function (fruit) {
                     if(fruit.gemLevel == "21" && fruit.gemQuality == "20") { //&& fruit.change != "0"
@@ -288,6 +288,27 @@ client.on("chat", async (channel, user, message, self) => {
                 setTimeout(function () {
                     client.say(channel, "New to PoE (Path of Exile) go here https://www.youtube.com/watch?v=2JPVJIn98B4 and watch Beginner Guide + Zizaran's Tips and Tricks")
                 }, 3000);
+            }
+        }
+        if(command == "checkme") {
+            if(args[0]) {
+                request('https://decapi.me/twitch/followage/finncapp/' + args[0], function (error, response, body) {
+                    if(channel == "#finncapp") {
+                        client.say(channel, args[0] + " has been following " + body)
+                    } else {
+                        setTimeout(function () {
+                            client.say(channel, args[0] + " has been following " + body)
+                        }, 3000);
+                    } 
+                });
+            } else {
+                if(channel == "#finncapp") {
+                    client.say(channel, "Usage: !checkme [username]")
+                } else {
+                    setTimeout(function () {
+                        client.say(channel, "Usage: !checkme [username]")
+                    }, 3000);
+                }
             }
         }
     }
