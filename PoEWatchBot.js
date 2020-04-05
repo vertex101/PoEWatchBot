@@ -2,7 +2,6 @@ const config = require('./config/cfg.json');
 const tmi = require('tmi.js');
 const request = require('request');
 const fs = require('fs');
-var gem2120 = [], gem2123 = [], gemAwake = []
 var prefix = "!";
 let options = {
     options: {
@@ -43,177 +42,66 @@ client.on("chat", async (channel, user, message, self) => {
     if(user.username == channel.replace("#", "") ||  user.mod || user.username == "vertex101"){
         if(command == "cmds") {
             if(channel == "#finncapp") {
-                client.say(channel, "Current Commands: !ex, !23, !awakened, !20, !hunter, !doc, !mirror, !round, !chaos, !exc, !starter")
+                client.say(channel, "Current Commands: !ex, !hunter, !doc, !mirror, !round, !chaos, !exc, !starter")
             } else {
                 setTimeout(function () {
-                    client.say(channel, "Current Commands: !ex, !23, !awakened, !20, !hunter, !doc, !mirror, !round, !chaos, !exc, !starter")
+                    client.say(channel, "Current Commands: !ex, !hunter, !doc, !mirror, !round, !chaos, !exc, !starter")
                 }, 3000); 
             }
         }
         if(command == "ex") {
-            request('https://api.poe.watch/item?id=142', function (error, response, body) {
+            request('https://poe.ninja/api/data/currencyoverview?league=Delirium&type=Currency', function (error, response, body) {
                 pullData = JSON.parse(body);
                 if(channel == "#finncapp") {
-                    client.say(channel, "1 Exalted Orb is equal to " + pullData.leagues[0].mode + " Chaos")
+                    client.say(channel, "1 Exalted Orb is equal to " + pullData.lines[7].receive.value + " Chaos")
                 } else {
                     setTimeout(function () {
-                        client.say(channel, "1 Exalted Orb is equal to " + pullData.leagues[0].mode + " Chaos")
+                        client.say(channel, "1 Exalted Orb is equal to " + pullData.lines[7].receive.value + " Chaos")
                     }, 3000);
                 }
             });
         }
-        if(command == "23") {
-            request("https://api.poe.watch/get?league=Delirium&category=gem", function (error, responce, body) {
-                top523 = JSON.parse(body);
-                top523.forEach(function (fruit) {
-                    if(fruit.gemLevel == "21" && fruit.gemQuality == "23") { // && fruit.change != "0"
-                        gem2123.push(fruit.name+":"+fruit.exalted.toFixed(2))
-                    }
-                });
-                if(channel == "#finncapp") {
-                    var gem1 = gem2123[0].split(":")
-                        var gem2 = gem2123[1].split(":")
-                        var gem3 = gem2123[2].split(":")
-                        var gem4 = gem2123[3].split(":")
-                        var gem5 = gem2123[4].split(":")
-                        client.say(channel, "Top 5 21/23 GEMS 1) "
-                            + gem1[0] + " - " + gem1[1]
-                            + "ex 2) " + gem2[0] + " - " + gem2[1]
-                            + "ex 3) " + gem3[0] + " - " + gem3[1]
-                            + "ex 4) " + gem4[0] + " - " + gem4[1]
-                            + "ex 5) " + gem5[0] + " - " + gem5[1] + "ex")
-                } else {
-                    setTimeout(function() {
-                        var gem1 = gem2123[0].split(":")
-                        var gem2 = gem2123[1].split(":")
-                        var gem3 = gem2123[2].split(":")
-                        var gem4 = gem2123[3].split(":")
-                        var gem5 = gem2123[4].split(":")
-                        client.say(channel, "Top 5 21/23 GEMS 1) "
-                            + gem1[0] + " - " + gem1[1]
-                            + "ex 2) " + gem2[0] + " - " + gem2[1]
-                            + "ex 3) " + gem3[0] + " - " + gem3[1]
-                            + "ex 4) " + gem4[0] + " - " + gem4[1]
-                            + "ex 5) " + gem5[0] + " - " + gem5[1] + "ex")
-                    }, 3000)
-                }
-            });
-        }
-        if(command == "awakened") {
-            request("https://api.poe.watch/get?league=Delirium&category=gem", function (error, responce, body) {
-                topAwak = JSON.parse(body);
-                topAwak.forEach(function (fruit) {
-                    if(fruit.name.includes("Awakened") && fruit.gemQuality == "20") { // && fruit.change != "0"
-                    gemAwake.push(fruit.name+":"+fruit.exalted.toFixed(2))
-                    }
-                });
-                if(channel == "#finncapp") {
-                    var gem1 = gemAwake[0].split(":")
-                        var gem2 = gemAwake[1].split(":")
-                        var gem3 = gemAwake[2].split(":")
-                        var gem4 = gemAwake[3].split(":")
-                        var gem5 = gemAwake[4].split(":")
-                        client.say(channel, "Top 5 Awakened GEMS 1) "
-                            + gem1[0] + " - " + gem1[1]
-                            + "ex 2) " + gem2[0] + " - " + gem2[1]
-                            + "ex 3) " + gem3[0] + " - " + gem3[1]
-                            + "ex 4) " + gem4[0] + " - " + gem4[1]
-                            + "ex 5) " + gem5[0] + " - " + gem5[1] + "ex")
-                } else {
-                    setTimeout(function() {
-                        var gem1 = gemAwake[0].split(":")
-                        var gem2 = gemAwake[1].split(":")
-                        var gem3 = gemAwake[2].split(":")
-                        var gem4 = gemAwake[3].split(":")
-                        var gem5 = gemAwake[4].split(":")
-                        client.say(channel, "Top 5 Awakened GEMS 1) "
-                            + gem1[0] + " - " + gem1[1]
-                            + "ex 2) " + gem2[0] + " - " + gem2[1]
-                            + "ex 3) " + gem3[0] + " - " + gem3[1]
-                            + "ex 4) " + gem4[0] + " - " + gem4[1]
-                            + "ex 5) " + gem5[0] + " - " + gem5[1] + "ex")
-                    }, 3000) 
-                } 
-            });
-        }
-        if(command == "20") {
-            request("https://api.poe.watch/get?league=Delirium&category=gem", function (error, responce, body) {
-                top520 = JSON.parse(body);
-                top520.forEach(function (fruit) {
-                    if(fruit.gemLevel == "21" && fruit.gemQuality == "20") { //&& fruit.change != "0"
-                        gem2120.push(fruit.name+":"+fruit.exalted.toFixed(2))
-                    }
-                });
-                if(channel == "#finncapp") {
-                    var gem1 = gem2120[0].split(":")
-                        var gem2 = gem2120[1].split(":")
-                        var gem3 = gem2120[2].split(":")
-                        var gem4 = gem2120[3].split(":")
-                        var gem5 = gem2120[4].split(":")
-                        client.say(channel, "Top 5 21/20 GEMS 1) "
-                            + gem1[0] + " - " + gem1[1]
-                            + "ex 2) " + gem2[0] + " - " + gem2[1]
-                            + "ex 3) " + gem3[0] + " - " + gem3[1]
-                            + "ex 4) " + gem4[0] + " - " + gem4[1]
-                            + "ex 5) " + gem5[0] + " - " + gem5[1] + "ex")
-                } else {
-                    setTimeout(function() {
-                        var gem1 = gem2120[0].split(":")
-                        var gem2 = gem2120[1].split(":")
-                        var gem3 = gem2120[2].split(":")
-                        var gem4 = gem2120[3].split(":")
-                        var gem5 = gem2120[4].split(":")
-                        client.say(channel, "Top 5 21/20 GEMS 1) "
-                            + gem1[0] + " - " + gem1[1]
-                            + "ex 2) " + gem2[0] + " - " + gem2[1]
-                            + "ex 3) " + gem3[0] + " - " + gem3[1]
-                            + "ex 4) " + gem4[0] + " - " + gem4[1]
-                            + "ex 5) " + gem5[0] + " - " + gem5[1] + "ex")
-                    }, 3000)
-                } 
-            });
-        }
         if(command == "hunter") {
-            request('https://api.poe.watch/item?id=3891', function (error, response, body) {
+            request('https://poe.ninja/api/data/itemoverview?league=Delirium&type=UniqueAccessory', function (error, response, body) {
                 pullData = JSON.parse(body);
                 if(channel == "#finncapp") {
-                    client.say(channel, "HeadHunter is worth " + pullData.leagues[0].exalted.toFixed(2) + "ex")
+                    client.say(channel, "HeadHunter is worth " + pullData.lines[0].exaltedValue + "ex")
                 } else {
                     setTimeout(function () {
-                        client.say(channel, "HeadHunter is worth " + pullData.leagues[0].exalted.toFixed(2) + "ex")
+                        client.say(channel, "HeadHunter is worth " + pullData.lines[0].exaltedValue + "ex")
                     }, 3000);  
                 }
             });
         }
         if(command == "doc") {
-            request('https://api.poe.watch/item?id=3509', function (error, response, body) {
+            request('https://poe.ninja/api/data/itemoverview?league=Delirium&type=DivinationCard', function (error, response, body) {
                 pullData = JSON.parse(body);
                 if(channel == "#finncapp") {
-                    client.say(channel, "The Doctor is worth " + pullData.leagues[0].exalted.toFixed(2) + "ex")
+                    client.say(channel, "The Doctor is worth " + pullData.lines[1].exaltedValue + "ex")
                 } else {
                     setTimeout(function () {
-                        client.say(channel, "The Doctor is worth " + pullData.leagues[0].exalted.toFixed(2) + "ex")
+                        client.say(channel, "The Doctor is worth " + pullData.lines[1].exaltedValue + "ex")
                     }, 3000);
                 }
             });
         }
         if(command == "mirror") {
-            request('https://api.poe.watch/item?id=3283', function (error, response, body) {
+            request('https://poe.ninja/api/data/currencyoverview?league=Delirium&type=Currency', function (error, response, body) {
                 pullData = JSON.parse(body);
                 if(channel == "#finncapp") {
-                    client.say(channel, "Mirror of Kalandra is worth " + pullData.leagues[0].exalted.toFixed(2) + "ex")
+                    client.say(channel, "Mirror of Kalandra is worth " + Math.round(pullData.lines[0].receive.value / pullData.lines[7].receive.value) + "ex")
                 } else {
                     setTimeout(function () {
-                        client.say(channel, "Mirror of Kalandra is worth " + pullData.leagues[0].exalted.toFixed(2) + "ex")
+                        client.say(channel, "Mirror of Kalandra is worth " + Math.round(pullData.lines[0].receive.value / pullData.lines[7].receive.value) + "ex")
                     }, 3000); 
                 } 
             });
         }
         if(command == "round") {
             if(args[0]) {
-                request('https://api.poe.watch/item?id=142', function (error, response, body) {
+                request('https://poe.ninja/api/data/currencyoverview?league=Delirium&type=Currency', function (error, response, body) {
                     pullData = JSON.parse(body);
-                    var cTotal = (pullData.leagues[0].mode * Number("0." + args[0] + "0"))
+                    var cTotal = (pullData.lines[7].receive.value * Number("0." + args[0] + "0"))
                     if(channel == "#finncapp") {
                         client.say(channel, "0." + args[0] + "ex is " + Math.round(cTotal) + "c")
                     } else {
@@ -230,24 +118,18 @@ client.on("chat", async (channel, user, message, self) => {
         }
         if(command == "chaos") {
             if(args[0]) {
-                request('https://api.poe.watch/item?id=142', function (error, response, body) {
+                request('https://poe.ninja/api/data/currencyoverview?league=Delirium&type=Currency', function (error, response, body) {
                     pullData = JSON.parse(body);
-                    var cTotal = (Number(args[0]) / pullData.leagues[0].mode)
+                    var cTotal = (Number(args[0]) / pullData.lines[7].receive.value)
                     var getOdds = cTotal.toFixed(2).split('.')
-                    console.log('Post Message #1')
-                    request('https://api.poe.watch/item?id=142', function (error, response, body) {
-                        pullData = JSON.parse(body);
-                        var cChaos = (pullData.leagues[0].mode * Number("0." + getOdds[1]))
-                        if(channel == "#finncapp") {
-                            console.log('Post Message #2')
+                    var cChaos = (pullData.lines[7].receive.value * Number("0." + getOdds[1]))
+                    if(channel == "#finncapp") {
+                        client.say(channel, args[0]+"c = " + getOdds[0] + "ex " + Math.round(cChaos) + "c")
+                    } else {
+                        setTimeout(function () {
                             client.say(channel, args[0]+"c = " + getOdds[0] + "ex " + Math.round(cChaos) + "c")
-                        } else {
-                            setTimeout(function () {
-                                console.log('Post Message #3')
-                                client.say(channel, args[0]+"c = " + getOdds[0] + "ex " + Math.round(cChaos) + "c")
-                            }, 3000); 
-                        }
-                    });
+                        }, 3000); 
+                    }
                 });
             } else {
                 setTimeout(function () {
@@ -257,14 +139,14 @@ client.on("chat", async (channel, user, message, self) => {
         }
         if(command == "exc") {
             if(args[0]) {
-                request('https://api.poe.watch/item?id=142', function (error, response, body) {
+                request('https://poe.ninja/api/data/currencyoverview?league=Delirium&type=Currency', function (error, response, body) {
                     pullData = JSON.parse(body);
                     if(args[0].includes('.')) {
                         var getARG = args[0].split('.')
-                        var cTotal = (Number(getARG[0]) * pullData.leagues[0].mode)
-                        var getOdds = (pullData.leagues[0].mode * Number("0." + getARG[1]))
+                        var cTotal = (Number(getARG[0]) * pullData.lines[7].receive.value)
+                        var getOdds = (pullData.lines[7].receive.value * Number("0." + getARG[1]))
                     } else {
-                        var cTotal = (Number(args[0]) * pullData.leagues[0].mode)
+                        var cTotal = (Number(args[0]) * pullData.lines[7].receive.value)
                         var getOdds = 0
                     }
                     if(channel == "#finncapp") {
@@ -290,27 +172,6 @@ client.on("chat", async (channel, user, message, self) => {
                 }, 3000);
             }
         }
-        if(command == "checkme") {
-            if(args[0]) {
-                request('https://decapi.me/twitch/followage/finncapp/' + args[0], function (error, response, body) {
-                    if(channel == "#finncapp") {
-                        client.say(channel, args[0] + " has been following " + body)
-                    } else {
-                        setTimeout(function () {
-                            client.say(channel, args[0] + " has been following " + body)
-                        }, 3000);
-                    } 
-                });
-            } else {
-                if(channel == "#finncapp") {
-                    client.say(channel, "Usage: !checkme [username]")
-                } else {
-                    setTimeout(function () {
-                        client.say(channel, "Usage: !checkme [username]")
-                    }, 3000);
-                }
-            }
-        }
     }
     if(user.username == "vertex101") {
         if(command == "vso") {
@@ -330,29 +191,6 @@ client.on("chat", async (channel, user, message, self) => {
         if(command == "bpop") { //
             setTimeout(function () {
                 client.say(channel, "Bane POP build by mbXtreme https://www.youtube.com/watch?v=RDJqEdWqdAE the PoB is in the video description")
-            }, 3000);
-        }
-        if(command == "join") {
-            client.join(args[0])
-        }
-    }
-    if(channel == "#sketch") {
-        if(command == "gfg") { 
-            setTimeout(function () {
-                client.say(channel, 
-                    "Gamers for Giving is a weekend-long competitive gaming tournament,"+
-                    "LAN party, & streamathon that helps raise money in support of Gamers Outreach programs."+
-                    "Ticket sales and donations help provide entertainment devices to hospitalized children."+
-                    " to learn more go to https://gamersforgiving.org/")
-            }, 3000);
-        }
-        if(command == "go") { 
-            setTimeout(function () {
-                client.say(channel, 
-                    "What is Gamers Outreach?"+
-                    "Founded in 2007, we're a 501(c)(3) charity organization that provides equipment,"+
-                    "technology, and software to help kids cope with treatment inside hospitals."+
-                    " to learn more go to https://gamersoutreach.org/")
             }, 3000);
         }
     }
