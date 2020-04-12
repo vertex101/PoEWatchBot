@@ -163,6 +163,18 @@ client.on("chat", async (channel, user, message, self) => {
                 }, 3000);
             }
         }
+        if(command == "sim") {
+            request('https://poe.ninja/api/data/currencyoverview?league=Delirium&type=Fragment', function (error, response, body) {
+                pullData = JSON.parse(body);
+                if(channel == "#finncapp") {
+                    client.say(channel, "Simulacrum is equal to " + Math.round(pullData.lines[5].receive.value) + " Chaos")
+                } else {
+                    setTimeout(function () {
+                        client.say(channel, "Simulacrum is equal to " + Math.round(pullData.lines[5].receive.value) + " Chaos")
+                    }, 3000);
+                }
+            });
+        }
         if(command == "starter") { //https://www.youtube.com/watch?v=2JPVJIn98B4
             if(channel == "#finncapp") {
                 client.say(channel, "New to PoE (Path of Exile) go here https://www.youtube.com/watch?v=2JPVJIn98B4 and watch Beginner Guide + Zizaran's Tips and Tricks")
