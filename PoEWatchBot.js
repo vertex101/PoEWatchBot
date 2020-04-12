@@ -42,73 +42,105 @@ client.on("chat", async (channel, user, message, self) => {
     if(user.username == channel.replace("#", "") ||  user.mod || user.username == "vertex101"){
         if(command == "cmds") {
             if(channel == "#finncapp") {
-                client.say(channel, "Current Commands: !ex, !hunter, !doc, !mirror, !round, !chaos, !exc, !starter")
+                client.say(channel, "Current Commands: !ex, !hunter, !doc, !mirror, !round, !chaos, !exc, !sim, !starter")
             } else {
                 setTimeout(function () {
-                    client.say(channel, "Current Commands: !ex, !hunter, !doc, !mirror, !round, !chaos, !exc, !starter")
+                    client.say(channel, "Current Commands: !ex, !hunter, !doc, !mirror, !round, !chaos, !exc, !sim, !starter")
                 }, 3000); 
             }
         }
         if(command == "ex") {
             request('https://poe.ninja/api/data/currencyoverview?league=Delirium&type=Currency', function (error, response, body) {
                 pullData = JSON.parse(body);
-                if(channel == "#finncapp") {
-                    client.say(channel, "1 Exalted Orb is equal to " + pullData.lines[7].receive.value.toFixed(2) + " Chaos")
-                } else {
-                    setTimeout(function () {
-                        client.say(channel, "1 Exalted Orb is equal to " + pullData.lines[7].receive.value.toFixed(2) + " Chaos")
-                    }, 3000);
-                }
+                pullData.lines.forEach(function (ex) {
+                    if(ex.currencyTypeName == "Exalted Orb") {
+                        if(channel == "#finncapp") {
+                            client.say(channel, "1 Exalted Orb is equal to " + ex.receive.value.toFixed(2) + " Chaos")
+                        } else {
+                            setTimeout(function () {
+                                client.say(channel, "1 Exalted Orb is equal to " + ex.receive.value.toFixed(2) + " Chaos")
+                            }, 3000);
+                        }
+                    }
+                })
             });
         }
         if(command == "hunter") {
             request('https://poe.ninja/api/data/itemoverview?league=Delirium&type=UniqueAccessory', function (error, response, body) {
                 pullData = JSON.parse(body);
-                if(channel == "#finncapp") {
-                    client.say(channel, "HeadHunter is worth " + pullData.lines[0].exaltedValue + "ex")
-                } else {
-                    setTimeout(function () {
-                        client.say(channel, "HeadHunter is worth " + pullData.lines[0].exaltedValue + "ex")
-                    }, 3000);  
-                }
+                pullData.lines.forEach(function (hunt) {
+                    if(hunt.name == "Headhunter") {
+                        if(channel == "#finncapp") {
+                            client.say(channel, "HeadHunter is worth " + hunt.exaltedValue + "ex")
+                        } else {
+                            setTimeout(function () {
+                                client.say(channel, "HeadHunter is worth " + hunt.exaltedValue + "ex")
+                            }, 3000);  
+                        }
+                    }
+                })
             });
         }
         if(command == "doc") {
             request('https://poe.ninja/api/data/itemoverview?league=Delirium&type=DivinationCard', function (error, response, body) {
                 pullData = JSON.parse(body);
-                if(channel == "#finncapp") {
-                    client.say(channel, "The Doctor is worth " + pullData.lines[1].exaltedValue + "ex")
-                } else {
-                    setTimeout(function () {
-                        client.say(channel, "The Doctor is worth " + pullData.lines[1].exaltedValue + "ex")
-                    }, 3000);
-                }
+                pullData.lines.forEach(function (doc) {
+                    if(doc.name == "The Doctor") {
+                        if(channel == "#finncapp") {
+                            client.say(channel, "The Doctor is worth " + doc.exaltedValue + "ex")
+                        } else {
+                            setTimeout(function () {
+                                client.say(channel, "The Doctor is worth " + doc.exaltedValue + "ex")
+                            }, 3000);
+                        }
+                    }
+                })
             });
         }
         if(command == "mirror") {
             request('https://poe.ninja/api/data/currencyoverview?league=Delirium&type=Currency', function (error, response, body) {
                 pullData = JSON.parse(body);
-                if(channel == "#finncapp") {
-                    client.say(channel, "Mirror of Kalandra is worth " + Math.round(pullData.lines[0].receive.value / pullData.lines[7].receive.value) + "ex")
-                } else {
-                    setTimeout(function () {
-                        client.say(channel, "Mirror of Kalandra is worth " + Math.round(pullData.lines[0].receive.value / pullData.lines[7].receive.value) + "ex")
-                    }, 3000); 
-                } 
+                pullData.lines.some(function (mir) {
+                    var cc , mm
+                    if(mir.currencyTypeName == "Mirror of Kalandra") {
+                        mm = mir.receive.value
+                    }
+                    request('https://poe.ninja/api/data/currencyoverview?league=Delirium&type=Currency', function (error, response, body) {
+                        pullData = JSON.parse(body);
+                        pullData.lines.some(function (ccc) {
+                            if(ccc.currencyTypeName == "Exalted Orb") {
+                                cc = ccc.receive.value
+                            }
+                            return ccc.currencyTypeName === "Exalted Orb"
+                        })
+                    });
+                    if(channel == "#finncapp") {
+                        client.say(channel, "Mirror of Kalandra is worth " + Math.round(mm / cc) + "ex")
+                    } else {
+                        setTimeout(function () {
+                            client.say(channel, "Mirror of Kalandra is worth " + Math.round(mm / cc) + "ex")
+                        }, 3000); 
+                    }
+                    return mir.currencyTypeName === "Mirror of Kalandra"
+                })
             });
         }
         if(command == "round") {
             if(args[0]) {
                 request('https://poe.ninja/api/data/currencyoverview?league=Delirium&type=Currency', function (error, response, body) {
                     pullData = JSON.parse(body);
-                    var cTotal = (pullData.lines[7].receive.value * Number("0." + args[0] + "0"))
-                    if(channel == "#finncapp") {
-                        client.say(channel, "0." + args[0] + "ex is " + Math.round(cTotal) + "c")
-                    } else {
-                        setTimeout(function () {
-                            client.say(channel, "0." + args[0] + "ex is " + Math.round(cTotal) + "c")
-                        }, 3000);
-                    } 
+                    pullData.lines.forEach(function (round) {
+                        if(round.currencyTypeName == "Exalted Orb") {
+                            var cTotal = (round.receive.value * Number("0." + args[0] + "0"))
+                            if(channel == "#finncapp") {
+                                client.say(channel, "0." + args[0] + "ex is " + Math.round(cTotal) + "c")
+                            } else {
+                                setTimeout(function () {
+                                    client.say(channel, "0." + args[0] + "ex is " + Math.round(cTotal) + "c")
+                                }, 3000);
+                            }
+                        }
+                    }) 
                 });
             } else {
                 setTimeout(function () {
@@ -120,16 +152,20 @@ client.on("chat", async (channel, user, message, self) => {
             if(args[0]) {
                 request('https://poe.ninja/api/data/currencyoverview?league=Delirium&type=Currency', function (error, response, body) {
                     pullData = JSON.parse(body);
-                    var cTotal = (Number(args[0]) / pullData.lines[7].receive.value)
-                    var getOdds = cTotal.toFixed(2).split('.')
-                    var cChaos = (pullData.lines[7].receive.value * Number("0." + getOdds[1]))
-                    if(channel == "#finncapp") {
-                        client.say(channel, args[0]+"c = " + getOdds[0] + "ex " + Math.round(cChaos) + "c")
-                    } else {
-                        setTimeout(function () {
-                            client.say(channel, args[0]+"c = " + getOdds[0] + "ex " + Math.round(cChaos) + "c")
-                        }, 3000); 
-                    }
+                    pullData.lines.forEach(function (chaos) {
+                        if(chaos.currencyTypeName == "Exalted Orb") {
+                            var cTotal = (Number(args[0]) / chaos.receive.value)
+                            var getOdds = cTotal.toFixed(2).split('.')
+                            var cChaos = (chaos.receive.value * Number("0." + getOdds[1]))
+                            if(channel == "#finncapp") {
+                                client.say(channel, args[0]+"c = " + getOdds[0] + "ex " + Math.round(cChaos) + "c")
+                            } else {
+                                setTimeout(function () {
+                                    client.say(channel, args[0]+"c = " + getOdds[0] + "ex " + Math.round(cChaos) + "c")
+                                }, 3000); 
+                            }
+                        }
+                    })
                 });
             } else {
                 setTimeout(function () {
@@ -141,21 +177,25 @@ client.on("chat", async (channel, user, message, self) => {
             if(args[0]) {
                 request('https://poe.ninja/api/data/currencyoverview?league=Delirium&type=Currency', function (error, response, body) {
                     pullData = JSON.parse(body);
-                    if(args[0].includes('.')) {
-                        var getARG = args[0].split('.')
-                        var cTotal = (Number(getARG[0]) * pullData.lines[7].receive.value)
-                        var getOdds = (pullData.lines[7].receive.value * Number("0." + getARG[1]))
-                    } else {
-                        var cTotal = (Number(args[0]) * pullData.lines[7].receive.value)
-                        var getOdds = 0
-                    }
-                    if(channel == "#finncapp") {
-                        client.say(channel, args[0]+"ex = " + Math.round(cTotal + getOdds) + "c")
-                    } else {
-                        setTimeout(function () {
-                            client.say(channel, args[0]+"ex = " + Math.round(cTotal + getOdds) + "c")
-                        }, 3000); 
-                    }
+                    pullData.lines.forEach(function (exc) {
+                        if(exc.currencyTypeName == "Exalted Orb") {
+                            if(args[0].includes('.')) {
+                                var getARG = args[0].split('.')
+                                var cTotal = (Number(getARG[0]) * exc.receive.value)
+                                var getOdds = (exc.receive.value * Number("0." + getARG[1]))
+                            } else {
+                                var cTotal = (Number(args[0]) * exc.receive.value)
+                                var getOdds = 0
+                            }
+                            if(channel == "#finncapp") {
+                                client.say(channel, args[0]+"ex = " + Math.round(cTotal + getOdds) + "c")
+                            } else {
+                                setTimeout(function () {
+                                    client.say(channel, args[0]+"ex = " + Math.round(cTotal + getOdds) + "c")
+                                }, 3000); 
+                            }
+                        }
+                    })
                 });
             } else {
                 setTimeout(function () {
@@ -166,13 +206,17 @@ client.on("chat", async (channel, user, message, self) => {
         if(command == "sim") {
             request('https://poe.ninja/api/data/currencyoverview?league=Delirium&type=Fragment', function (error, response, body) {
                 pullData = JSON.parse(body);
-                if(channel == "#finncapp") {
-                    client.say(channel, "Simulacrum is equal to " + pullData.lines[5].receive.value.toFixed(2) + " Chaos")
-                } else {
-                    setTimeout(function () {
-                        client.say(channel, "Simulacrum is equal to " + pullData.lines[5].receive.value.toFixed(2) + " Chaos")
-                    }, 3000);
-                }
+                pullData.lines.forEach(function (sim) {
+                    if(sim.currencyTypeName == "Simulacrum") {
+                        if(channel == "#finncapp") {
+                            client.say(channel, "Simulacrum is equal to " + sim.receive.value.toFixed(2) + " Chaos")
+                        } else {
+                            setTimeout(function () {
+                                client.say(channel, "Simulacrum is equal to " + sim.receive.value.toFixed(2) + " Chaos")
+                            }, 3000);
+                        }
+                    }
+                })
             });
         }
         if(command == "starter") { //https://www.youtube.com/watch?v=2JPVJIn98B4
