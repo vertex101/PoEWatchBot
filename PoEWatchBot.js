@@ -53,10 +53,10 @@ client.on("chat", async (channel, user, message, self) => {
             request('https://poe.ninja/api/data/currencyoverview?league=Delirium&type=Currency', function (error, response, body) {
                 pullData = JSON.parse(body);
                 if(channel == "#finncapp") {
-                    client.say(channel, "1 Exalted Orb is equal to " + pullData.lines[7].receive.value + " Chaos")
+                    client.say(channel, "1 Exalted Orb is equal to " + Math.round(pullData.lines[7].receive.value) + " Chaos")
                 } else {
                     setTimeout(function () {
-                        client.say(channel, "1 Exalted Orb is equal to " + pullData.lines[7].receive.value + " Chaos")
+                        client.say(channel, "1 Exalted Orb is equal to " + Math.round(pullData.lines[7].receive.value) + " Chaos")
                     }, 3000);
                 }
             });
