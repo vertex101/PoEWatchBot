@@ -108,7 +108,7 @@ client.on("chat", async (channel, user, message, self) => {
                 console.log('end');
             });
         }
-        if(command == "mirror") {
+        /* if(command == "mirror") {
             request('https://poe.ninja/api/data/currencyoverview?league=' + newLeague + '&type=Currency').on('data', function (response) {
                 pullData = JSON.parse(response);
                 pullData.lines.some(function (mir) {
@@ -144,7 +144,7 @@ client.on("chat", async (channel, user, message, self) => {
             }).on('end', function (err) {
                 if (err) return console.log('connection closed due to errors', err);
             });
-        }
+        } */
         if(command == "round") {
             if(args[0]) {
                 request('https://poe.ninja/api/data/currencyoverview?league=' + newLeague + '&type=Currency').on('data', function (response) {
