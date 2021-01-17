@@ -126,10 +126,11 @@ client.on("chat", async (channel, user, message, self) => {
                         })
                     }).on('end', function (err) {
                         if (err) return console.log('connection closed due to errors', err);
-                        console.log('end');
                     });
                     if(channel == "#finncapp") {
-                        client.say(channel, "Mirror of Kalandra is worth " + Math.round(mm / cc) + "ex")
+                        setTimeout(function () {
+                            client.say(channel, "Mirror of Kalandra is worth " + Math.round(mm / cc) + "ex")
+                        }, 3000); 
                     } else {
                         setTimeout(function () {
                             client.say(channel, "Mirror of Kalandra is worth " + Math.round(mm / cc) + "ex")
@@ -139,7 +140,6 @@ client.on("chat", async (channel, user, message, self) => {
                 })
             }).on('end', function (err) {
                 if (err) return console.log('connection closed due to errors', err);
-                console.log('end');
             });
         }
         if(command == "round") {
