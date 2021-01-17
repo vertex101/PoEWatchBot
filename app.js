@@ -113,18 +113,16 @@ client.on("chat", async (channel, user, message, self) => {
                 console.log(response)
                 pullData = JSON.parse(response);
                 pullData.lines.some(function (mir) {
-                    var mm
                     if(mir.currencyTypeName == "Mirror of Kalandra") {
-                        mm = mir.receive.value
-                    }
-                    if(channel == "#finncapp") { 
-                        setTimeout(function () {
-                            client.say(channel, "Mirror of Kalandra is worth " + mm + " chaos")
-                        }, 3000); 
-                    } else {
-                        setTimeout(function () {
-                            client.say(channel, "Mirror of Kalandra is worth " + mm + " chaos")
-                        }, 3000); 
+                        if(channel == "#finncapp") { 
+                            setTimeout(function () {
+                                client.say(channel, "Mirror of Kalandra is worth " + mir.receive.value + " chaos")
+                            }, 3000); 
+                        } else {
+                            setTimeout(function () {
+                                client.say(channel, "Mirror of Kalandra is worth " + mir.receive.value + " chaos")
+                            }, 3000); 
+                        }
                     }
                 })
             }).on('end', function (err) {
