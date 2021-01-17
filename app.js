@@ -110,7 +110,6 @@ client.on("chat", async (channel, user, message, self) => {
         }
         if(command == "mirror") {
             request('https://poe.ninja/api/data/currencyoverview?league=' + newLeague + '&type=Currency').on('data', function (response) {
-                console.log(response)
                 pullData = JSON.parse(response);
                 pullData.lines.some(function (mir) {
                     if(mir.currencyTypeName == "Mirror of Kalandra") {
