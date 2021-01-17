@@ -1,5 +1,4 @@
 const tmi = require('tmi.js');
-const request = require('request');
 const fs = require('fs');
 
 var prefix = "!";
@@ -232,7 +231,7 @@ client.on("chat", async (channel, user, message, self) => {
         }
     }
     if(user.username == "vertex101") {
-        if(command == "vso") {
+/*         if(command == "vso") {
             if(args[0]) {
                 request({ url: 'https://api.twitch.tv/kraken/users?login=' + args[0].toLowerCase(), headers: { 'Accept': 'application/vnd.twitchtv.v5+json', 'Client-ID': process.env.idClient}}, function (error, response, body) {
                     pullData = JSON.parse(body);
@@ -245,7 +244,7 @@ client.on("chat", async (channel, user, message, self) => {
                     });
                 });
             }
-        }
+        } */
         if(command == "bpop") { //
             setTimeout(function () {
                 client.say(channel, "Bane POP build by mbXtreme https://www.youtube.com/watch?v=RDJqEdWqdAE the PoB is in the video description")
