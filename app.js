@@ -127,13 +127,15 @@ client.on("chat", async (channel, user, message, self) => {
                     }).on('end', function (err) {
                         if (err) return console.log('connection closed due to errors', err);
                     });
-                    if(channel == "#finncapp") {
+                    var checkPrice = Math.round(mm / cc)
+                    if (checkPrice == "NaNex") return;
+                    if(channel == "#finncapp") { 
                         setTimeout(function () {
-                            client.say(channel, "Mirror of Kalandra is worth " + Math.round(mm / cc) + "ex")
+                            client.say(channel, "Mirror of Kalandra is worth " + checkPrice + "ex")
                         }, 3000); 
                     } else {
                         setTimeout(function () {
-                            client.say(channel, "Mirror of Kalandra is worth " + Math.round(mm / cc) + "ex")
+                            client.say(channel, "Mirror of Kalandra is worth " + checkPrice + "ex")
                         }, 3000); 
                     }
                     return mir.currencyTypeName === "Mirror of Kalandra"
