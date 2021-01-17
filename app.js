@@ -108,43 +108,28 @@ client.on("chat", async (channel, user, message, self) => {
                 console.log('end');
             });
         }
-        /* if(command == "mirror") {
+        if(command == "mirror") {
             request('https://poe.ninja/api/data/currencyoverview?league=' + newLeague + '&type=Currency').on('data', function (response) {
                 pullData = JSON.parse(response);
                 pullData.lines.some(function (mir) {
-                    var cc , mm
+                    var mm
                     if(mir.currencyTypeName == "Mirror of Kalandra") {
                         mm = mir.receive.value
                     }
-                    request('https://poe.ninja/api/data/currencyoverview?league=' + newLeague + '&type=Currency').on('data', function (response) {
-                        pullData = JSON.parse(response);
-                        pullData.lines.some(function (ccc) {
-                            if(ccc.currencyTypeName == "Exalted Orb") {
-                                cc = ccc.receive.value
-                            }
-                            return ccc.currencyTypeName === "Exalted Orb"
-                        })
-                    }).on('end', function (err) {
-                        if (err) return console.log('connection closed due to errors', err);
-                    });
-                    var checkPrice = Math.round(mm / cc)
-                    if (checkPrice == "NaN") return;
-                    console.log(checkPrice)
                     if(channel == "#finncapp") { 
                         setTimeout(function () {
-                            client.say(channel, "Mirror of Kalandra is worth " + checkPrice + "ex")
+                            client.say(channel, "Mirror of Kalandra is worth " + mm + " chaos")
                         }, 3000); 
                     } else {
                         setTimeout(function () {
-                            client.say(channel, "Mirror of Kalandra is worth " + checkPrice + "ex")
+                            client.say(channel, "Mirror of Kalandra is worth " + mm + " chaos")
                         }, 3000); 
                     }
-                    return mir.currencyTypeName === "Mirror of Kalandra"
                 })
             }).on('end', function (err) {
                 if (err) return console.log('connection closed due to errors', err);
             });
-        } */
+        }
         if(command == "round") {
             if(args[0]) {
                 request('https://poe.ninja/api/data/currencyoverview?league=' + newLeague + '&type=Currency').on('data', function (response) {
