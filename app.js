@@ -15,8 +15,8 @@ let options = {
         secure: true
     },
     identity: {
-        username: config.twitch.nick,
-        password: config.twitch.oauth
+        username: process.env.Nick,
+        password: process.env.Auth
     },
     channels: ["#vertex101"]
 };
@@ -235,9 +235,9 @@ client.on("chat", async (channel, user, message, self) => {
     if(user.username == "vertex101") {
         if(command == "vso") {
             if(args[0]) {
-                request({ url: 'https://api.twitch.tv/kraken/users?login=' + args[0].toLowerCase(), headers: { 'Accept': 'application/vnd.twitchtv.v5+json', 'Client-ID': config.twitch.client}}, function (error, response, body) {
+                request({ url: 'https://api.twitch.tv/kraken/users?login=' + args[0].toLowerCase(), headers: { 'Accept': 'application/vnd.twitchtv.v5+json', 'Client-ID': process.env.idClient}}, function (error, response, body) {
                     pullData = JSON.parse(body);
-                    request({ url: 'https://api.twitch.tv/kraken/channels/' + pullData.users[0]._id, headers: { 'Accept': 'application/vnd.twitchtv.v5+json', 'Client-ID': config.twitch.client}}, function (error, response, body) {
+                    request({ url: 'https://api.twitch.tv/kraken/channels/' + pullData.users[0]._id, headers: { 'Accept': 'application/vnd.twitchtv.v5+json', 'Client-ID': process.env.idClient}}, function (error, response, body) {
                         pullData = JSON.parse(body);
                         setTimeout(function () {
                             client.say(channel, "You should 100% check out " + pullData.display_name + "! You can find them," +
