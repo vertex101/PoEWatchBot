@@ -1,1 +1,1 @@
-start "" "%ProgramFiles%\Git\git-bash.exe" -c "node PoEWatchBot.js"
+start "" "%ProgramFiles%\Git\git-bash.exe" -c "node app.js"
