@@ -1,5 +1,5 @@
 const tmi = require('tmi.js');
-const request = require('request');
+const request = require('requests');
 const fs = require('fs');
 
 var prefix = "!";
@@ -52,8 +52,8 @@ client.on("chat", async (channel, user, message, self) => {
             }
         }
         if(command == "ex") {
-            request('https://poe.ninja/api/data/currencyoverview?league=' + newLeague + '&type=Currency', function (error, response, body) {
-                pullData = JSON.parse(body);
+            request('https://poe.ninja/api/data/currencyoverview?league=' + newLeague + '&type=Currency').on('data', function (response) {
+                pullData = JSON.parse(response);
                 pullData.lines.forEach(function (ex) {
                     if(ex.currencyTypeName == "Exalted Orb") {
                         if(channel == "#finncapp") {
@@ -65,6 +65,9 @@ client.on("chat", async (channel, user, message, self) => {
                         }
                     }
                 })
+            }).on('end', function (err) {
+                if (err) return console.log('connection closed due to errors', err);
+                console.log('end');
             });
         }
         if(command == "hunter") {
