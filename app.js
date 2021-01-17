@@ -115,11 +115,11 @@ client.on("chat", async (channel, user, message, self) => {
                     if(mir.currencyTypeName == "Mirror of Kalandra") {
                         if(channel == "#finncapp") { 
                             setTimeout(function () {
-                                client.say(channel, "Mirror of Kalandra is worth " + mir.receive.value + " chaos")
+                                client.say(channel, "Mirror of Kalandra is worth " + Math.round(mir.receive.value) + " chaos")
                             }, 3000); 
                         } else {
                             setTimeout(function () {
-                                client.say(channel, "Mirror of Kalandra is worth " + mir.receive.value + " chaos")
+                                client.say(channel, "Mirror of Kalandra is worth " + Math.round(mir.receive.value) + " chaos")
                             }, 3000); 
                         }
                     }
