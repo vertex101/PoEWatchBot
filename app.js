@@ -71,8 +71,8 @@ client.on("chat", async (channel, user, message, self) => {
             });
         }
         if(command == "hunter") {
-            request('https://poe.ninja/api/data/itemoverview?league=' + newLeague + '&type=UniqueAccessory', function (error, response, body) {
-                pullData = JSON.parse(body);
+            request('https://poe.ninja/api/data/itemoverview?league=' + newLeague + '&type=UniqueAccessory').on('data', function (response) {
+                pullData = JSON.parse(response);
                 pullData.lines.forEach(function (hunt) {
                     if(hunt.name == "Headhunter") {
                         if(channel == "#finncapp") {
@@ -84,11 +84,14 @@ client.on("chat", async (channel, user, message, self) => {
                         }
                     }
                 })
+            }).on('end', function (err) {
+                if (err) return console.log('connection closed due to errors', err);
+                console.log('end');
             });
         }
         if(command == "doc") {
-            request('https://poe.ninja/api/data/itemoverview?league=' + newLeague + '&type=DivinationCard', function (error, response, body) {
-                pullData = JSON.parse(body);
+            request('https://poe.ninja/api/data/itemoverview?league=' + newLeague + '&type=DivinationCard').on('data', function (response) {
+                pullData = JSON.parse(response);
                 pullData.lines.forEach(function (doc) {
                     if(doc.name == "The Doctor") {
                         if(channel == "#finncapp") {
@@ -100,24 +103,30 @@ client.on("chat", async (channel, user, message, self) => {
                         }
                     }
                 })
+            }).on('end', function (err) {
+                if (err) return console.log('connection closed due to errors', err);
+                console.log('end');
             });
         }
         if(command == "mirror") {
-            request('https://poe.ninja/api/data/currencyoverview?league=' + newLeague + '&type=Currency', function (error, response, body) {
-                pullData = JSON.parse(body);
+            request('https://poe.ninja/api/data/currencyoverview?league=' + newLeague + '&type=Currency').on('data', function (response) {
+                pullData = JSON.parse(response);
                 pullData.lines.some(function (mir) {
                     var cc , mm
                     if(mir.currencyTypeName == "Mirror of Kalandra") {
                         mm = mir.receive.value
                     }
-                    request('https://poe.ninja/api/data/currencyoverview?league=' + newLeague + '&type=Currency', function (error, response, body) {
-                        pullData = JSON.parse(body);
+                    request('https://poe.ninja/api/data/currencyoverview?league=' + newLeague + '&type=Currency').on('data', function (response) {
+                        pullData = JSON.parse(response);
                         pullData.lines.some(function (ccc) {
                             if(ccc.currencyTypeName == "Exalted Orb") {
                                 cc = ccc.receive.value
                             }
                             return ccc.currencyTypeName === "Exalted Orb"
                         })
+                    }).on('end', function (err) {
+                        if (err) return console.log('connection closed due to errors', err);
+                        console.log('end');
                     });
                     if(channel == "#finncapp") {
                         client.say(channel, "Mirror of Kalandra is worth " + Math.round(mm / cc) + "ex")
@@ -128,12 +137,15 @@ client.on("chat", async (channel, user, message, self) => {
                     }
                     return mir.currencyTypeName === "Mirror of Kalandra"
                 })
+            }).on('end', function (err) {
+                if (err) return console.log('connection closed due to errors', err);
+                console.log('end');
             });
         }
         if(command == "round") {
             if(args[0]) {
-                request('https://poe.ninja/api/data/currencyoverview?league=' + newLeague + '&type=Currency', function (error, response, body) {
-                    pullData = JSON.parse(body);
+                request('https://poe.ninja/api/data/currencyoverview?league=' + newLeague + '&type=Currency').on('data', function (response) {
+                    pullData = JSON.parse(response);
                     pullData.lines.forEach(function (round) {
                         if(round.currencyTypeName == "Exalted Orb") {
                             var cTotal = (round.receive.value * Number("0." + args[0] + "0"))
@@ -146,6 +158,9 @@ client.on("chat", async (channel, user, message, self) => {
                             }
                         }
                     }) 
+                }).on('end', function (err) {
+                    if (err) return console.log('connection closed due to errors', err);
+                    console.log('end');
                 });
             } else {
                 setTimeout(function () {
@@ -155,8 +170,8 @@ client.on("chat", async (channel, user, message, self) => {
         }
         if(command == "chaos") {
             if(args[0]) {
-                request('https://poe.ninja/api/data/currencyoverview?league=' + newLeague + '&type=Currency', function (error, response, body) {
-                    pullData = JSON.parse(body);
+                request('https://poe.ninja/api/data/currencyoverview?league=' + newLeague + '&type=Currency').on('data', function (response) {
+                    pullData = JSON.parse(response);
                     pullData.lines.forEach(function (chaos) {
                         if(chaos.currencyTypeName == "Exalted Orb") {
                             var cTotal = (Number(args[0]) / chaos.receive.value)
@@ -171,6 +186,9 @@ client.on("chat", async (channel, user, message, self) => {
                             }
                         }
                     })
+                }).on('end', function (err) {
+                    if (err) return console.log('connection closed due to errors', err);
+                    console.log('end');
                 });
             } else {
                 setTimeout(function () {
@@ -180,8 +198,8 @@ client.on("chat", async (channel, user, message, self) => {
         }
         if(command == "exc") {
             if(args[0]) {
-                request('https://poe.ninja/api/data/currencyoverview?league=' + newLeague + '&type=Currency', function (error, response, body) {
-                    pullData = JSON.parse(body);
+                request('https://poe.ninja/api/data/currencyoverview?league=' + newLeague + '&type=Currency').on('data', function (response) {
+                    pullData = JSON.parse(response);
                     pullData.lines.forEach(function (exc) {
                         if(exc.currencyTypeName == "Exalted Orb") {
                             if(args[0].includes('.')) {
@@ -201,6 +219,9 @@ client.on("chat", async (channel, user, message, self) => {
                             }
                         }
                     })
+                }).on('end', function (err) {
+                    if (err) return console.log('connection closed due to errors', err);
+                    console.log('end');
                 });
             } else {
                 setTimeout(function () {
@@ -209,8 +230,8 @@ client.on("chat", async (channel, user, message, self) => {
             }
         }
         if(command == "sim") {
-            request('https://poe.ninja/api/data/currencyoverview?league=' + newLeague + '&type=Fragment', function (error, response, body) {
-                pullData = JSON.parse(body);
+            request('https://poe.ninja/api/data/currencyoverview?league=' + newLeague + '&type=Fragment').on('data', function (response) {
+                pullData = JSON.parse(response);
                 pullData.lines.forEach(function (sim) {
                     if(sim.currencyTypeName == "Simulacrum") {
                         if(channel == "#finncapp") {
@@ -222,6 +243,9 @@ client.on("chat", async (channel, user, message, self) => {
                         }
                     }
                 })
+            }).on('end', function (err) {
+                if (err) return console.log('connection closed due to errors', err);
+                console.log('end');
             });
         }
         if(command == "starter") { //https://www.youtube.com/watch?v=2JPVJIn98B4
