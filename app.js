@@ -1,4 +1,3 @@
-const config = require('./config/cfg.json');
 const tmi = require('tmi.js');
 const request = require('request');
 const fs = require('fs');
