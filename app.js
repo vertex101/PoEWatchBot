@@ -1,5 +1,5 @@
 const tmi = require('tmi.js');
-const request = require('requests');
+const request = require('request');
 const fs = require('fs');
 
 var prefix = "!";
