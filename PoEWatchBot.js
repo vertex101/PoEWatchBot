@@ -2,7 +2,10 @@ const config = require('./config/cfg.json');
 const tmi = require('tmi.js');
 const request = require('request');
 const fs = require('fs');
+
 var prefix = "!";
+var newLeague = "Ritual";
+
 let options = {
     options: {
         debug: true
@@ -50,7 +53,7 @@ client.on("chat", async (channel, user, message, self) => {
             }
         }
         if(command == "ex") {
-            request('https://poe.ninja/api/data/currencyoverview?league=Delirium&type=Currency', function (error, response, body) {
+            request('https://poe.ninja/api/data/currencyoverview?league=' + newLeague + '&type=Currency', function (error, response, body) {
                 pullData = JSON.parse(body);
                 pullData.lines.forEach(function (ex) {
                     if(ex.currencyTypeName == "Exalted Orb") {
@@ -66,7 +69,7 @@ client.on("chat", async (channel, user, message, self) => {
             });
         }
         if(command == "hunter") {
-            request('https://poe.ninja/api/data/itemoverview?league=Delirium&type=UniqueAccessory', function (error, response, body) {
+            request('https://poe.ninja/api/data/itemoverview?league=' + newLeague + '&type=UniqueAccessory', function (error, response, body) {
                 pullData = JSON.parse(body);
                 pullData.lines.forEach(function (hunt) {
                     if(hunt.name == "Headhunter") {
@@ -82,7 +85,7 @@ client.on("chat", async (channel, user, message, self) => {
             });
         }
         if(command == "doc") {
-            request('https://poe.ninja/api/data/itemoverview?league=Delirium&type=DivinationCard', function (error, response, body) {
+            request('https://poe.ninja/api/data/itemoverview?league=' + newLeague + '&type=DivinationCard', function (error, response, body) {
                 pullData = JSON.parse(body);
                 pullData.lines.forEach(function (doc) {
                     if(doc.name == "The Doctor") {
@@ -98,14 +101,14 @@ client.on("chat", async (channel, user, message, self) => {
             });
         }
         if(command == "mirror") {
-            request('https://poe.ninja/api/data/currencyoverview?league=Delirium&type=Currency', function (error, response, body) {
+            request('https://poe.ninja/api/data/currencyoverview?league=' + newLeague + '&type=Currency', function (error, response, body) {
                 pullData = JSON.parse(body);
                 pullData.lines.some(function (mir) {
                     var cc , mm
                     if(mir.currencyTypeName == "Mirror of Kalandra") {
                         mm = mir.receive.value
                     }
-                    request('https://poe.ninja/api/data/currencyoverview?league=Delirium&type=Currency', function (error, response, body) {
+                    request('https://poe.ninja/api/data/currencyoverview?league=' + newLeague + '&type=Currency', function (error, response, body) {
                         pullData = JSON.parse(body);
                         pullData.lines.some(function (ccc) {
                             if(ccc.currencyTypeName == "Exalted Orb") {
@@ -127,7 +130,7 @@ client.on("chat", async (channel, user, message, self) => {
         }
         if(command == "round") {
             if(args[0]) {
-                request('https://poe.ninja/api/data/currencyoverview?league=Delirium&type=Currency', function (error, response, body) {
+                request('https://poe.ninja/api/data/currencyoverview?league=' + newLeague + '&type=Currency', function (error, response, body) {
                     pullData = JSON.parse(body);
                     pullData.lines.forEach(function (round) {
                         if(round.currencyTypeName == "Exalted Orb") {
@@ -150,7 +153,7 @@ client.on("chat", async (channel, user, message, self) => {
         }
         if(command == "chaos") {
             if(args[0]) {
-                request('https://poe.ninja/api/data/currencyoverview?league=Delirium&type=Currency', function (error, response, body) {
+                request('https://poe.ninja/api/data/currencyoverview?league=' + newLeague + '&type=Currency', function (error, response, body) {
                     pullData = JSON.parse(body);
                     pullData.lines.forEach(function (chaos) {
                         if(chaos.currencyTypeName == "Exalted Orb") {
@@ -175,7 +178,7 @@ client.on("chat", async (channel, user, message, self) => {
         }
         if(command == "exc") {
             if(args[0]) {
-                request('https://poe.ninja/api/data/currencyoverview?league=Delirium&type=Currency', function (error, response, body) {
+                request('https://poe.ninja/api/data/currencyoverview?league=' + newLeague + '&type=Currency', function (error, response, body) {
                     pullData = JSON.parse(body);
                     pullData.lines.forEach(function (exc) {
                         if(exc.currencyTypeName == "Exalted Orb") {
@@ -204,15 +207,15 @@ client.on("chat", async (channel, user, message, self) => {
             }
         }
         if(command == "sim") {
-            request('https://poe.ninja/api/data/currencyoverview?league=Delirium&type=Fragment', function (error, response, body) {
+            request('https://poe.ninja/api/data/currencyoverview?league=' + newLeague + '&type=Fragment', function (error, response, body) {
                 pullData = JSON.parse(body);
                 pullData.lines.forEach(function (sim) {
                     if(sim.currencyTypeName == "Simulacrum") {
                         if(channel == "#finncapp") {
-                            client.say(channel, "Simulacrum is equal to " + sim.receive.value.toFixed(2) + " Chaos")
+                            client.say(channel, "Simulacrum is equal to " + Math.round(sim.receive.value) + " Chaos")
                         } else {
                             setTimeout(function () {
-                                client.say(channel, "Simulacrum is equal to " + sim.receive.value.toFixed(2) + " Chaos")
+                                client.say(channel, "Simulacrum is equal to " + Math.round(sim.receive.value) + " Chaos")
                             }, 3000);
                         }
                     }
