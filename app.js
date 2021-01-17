@@ -128,7 +128,7 @@ client.on("chat", async (channel, user, message, self) => {
                         if (err) return console.log('connection closed due to errors', err);
                     });
                     var checkPrice = Math.round(mm / cc)
-                    if (checkPrice == "NaNex") return;
+                    if (checkPrice == "NaN") return;
                     console.log(checkPrice)
                     if(channel == "#finncapp") { 
                         setTimeout(function () {
