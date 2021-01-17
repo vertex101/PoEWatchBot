@@ -129,6 +129,7 @@ client.on("chat", async (channel, user, message, self) => {
                     });
                     var checkPrice = Math.round(mm / cc)
                     if (checkPrice == "NaNex") return;
+                    console.log(checkPrice)
                     if(channel == "#finncapp") { 
                         setTimeout(function () {
                             client.say(channel, "Mirror of Kalandra is worth " + checkPrice + "ex")
