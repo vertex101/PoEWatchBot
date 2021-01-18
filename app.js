@@ -4,6 +4,20 @@ const fs = require('fs');
 
 var prefix = "!";
 var newLeague = "Ritual";
+const chaosPrice = "";
+
+setInterval(function() {
+    request('https://poe.ninja/api/data/currencyoverview?league=' + newLeague + '&type=Currency').on('data', function (response) {
+        pullData = JSON.parse(response);
+        pullData.lines.forEach(function (chaos) {
+            if(chaos.currencyTypeName == "Exalted Orb") {
+                chaosPrice = chaos.receive.value
+            }
+        })
+    }).on('end', function (err) {
+        if (err) return console.log('connection closed due to errors', err);
+    });
+}, 3000);
 
 let options = {
     options: {
@@ -115,11 +129,11 @@ client.on("chat", async (channel, user, message, self) => {
                     if(mir.currencyTypeName == "Mirror of Kalandra") {
                         if(channel == "#finncapp") { 
                             setTimeout(function () {
-                                client.say(channel, "Mirror of Kalandra is worth " + Math.round(mir.receive.value) + " chaos")
+                                client.say(channel, "Mirror of Kalandra is worth " + Math.round(mir.receive.value / chaosPrice) + " chaos")
                             }, 3000); 
                         } else {
                             setTimeout(function () {
-                                client.say(channel, "Mirror of Kalandra is worth " + Math.round(mir.receive.value) + " chaos")
+                                client.say(channel, "Mirror of Kalandra is worth " + Math.round(mir.receive.value / chaosPrice) + " chaos")
                             }, 3000); 
                         }
                     }
