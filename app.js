@@ -127,7 +127,7 @@ client.on("chat", async (channel, user, message, self) => {
                 pullData = JSON.parse(response);
                 pullData.lines.some(function (mir) {
                     if(mir.currencyTypeName == "Mirror of Kalandra") {
-                        if(channel == "#finncapp") { 
+                        if(channel == "#finncapp" || channel == "#vertex101") { 
                             client.say(channel, "Mirror of Kalandra is worth " + Math.round(mir.receive.value / chaosPrice) + " exalts")
                         } else {
                             setTimeout(function () {
