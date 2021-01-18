@@ -4,7 +4,7 @@ const fs = require('fs');
 
 var prefix = "!";
 var newLeague = "Ritual";
-const chaosPrice = "";
+let chaosPrice = "";
 
 setInterval(function() {
     request('https://poe.ninja/api/data/currencyoverview?league=' + newLeague + '&type=Currency').on('data', function (response) {
@@ -129,11 +129,11 @@ client.on("chat", async (channel, user, message, self) => {
                     if(mir.currencyTypeName == "Mirror of Kalandra") {
                         if(channel == "#finncapp") { 
                             setTimeout(function () {
-                                client.say(channel, "Mirror of Kalandra is worth " + Math.round(mir.receive.value / chaosPrice) + " chaos")
+                                client.say(channel, "Mirror of Kalandra is worth " + Math.round(mir.receive.value / chaosPrice) + " exalts")
                             }, 3000); 
                         } else {
                             setTimeout(function () {
-                                client.say(channel, "Mirror of Kalandra is worth " + Math.round(mir.receive.value / chaosPrice) + " chaos")
+                                client.say(channel, "Mirror of Kalandra is worth " + Math.round(mir.receive.value / chaosPrice) + " exalts")
                             }, 3000); 
                         }
                     }
