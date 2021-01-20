@@ -286,7 +286,6 @@ client.on("chat", async (channel, user, message, self) => {
                 " ▬▬▬▬▬▬▬▬▬ஜ۩۞۩ஜ▬▬▬▬▬▬▬▬▬" +
                 " go check it out here over at github" +
                 " https://github.com/SnosMe/awakened-poe-trade")
-                )
         }
     }
 });
