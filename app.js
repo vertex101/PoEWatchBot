@@ -21,7 +21,7 @@ setInterval(function() {
 
 let options = {
     options: {
-        debug: false
+        debug: true
     },
     connection: {
         reconnect: true,
