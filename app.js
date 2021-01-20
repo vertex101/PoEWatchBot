@@ -280,6 +280,14 @@ client.on("chat", async (channel, user, message, self) => {
                     " the PoB is in the video descriptions")
             }, 3000);
         }
+        if(command == "awakened") {
+            client.say(channel, 
+                "Awakened PoE Trade" +
+                " ▬▬▬▬▬▬▬▬▬ஜ۩۞۩ஜ▬▬▬▬▬▬▬▬▬" +
+                " go check it out here over at github" +
+                " https://github.com/SnosMe/awakened-poe-trade")
+                )
+        }
     }
 });
 /* client.on("redeem", async (channel, username, rewardtype, tags, msg) => {
