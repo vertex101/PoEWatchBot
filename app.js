@@ -81,7 +81,6 @@ client.on("chat", async (channel, user, message, self) => {
                 })
             }).on('end', function (err) {
                 if (err) return console.log('connection closed due to errors', err);
-                console.log('end');
             });
         }
         if(command == "hunter") {
@@ -100,7 +99,6 @@ client.on("chat", async (channel, user, message, self) => {
                 })
             }).on('end', function (err) {
                 if (err) return console.log('connection closed due to errors', err);
-                console.log('end');
             });
         }
         if(command == "doc") {
@@ -119,7 +117,6 @@ client.on("chat", async (channel, user, message, self) => {
                 })
             }).on('end', function (err) {
                 if (err) return console.log('connection closed due to errors', err);
-                console.log('end');
             });
         }
         if(command == "mirror") {
@@ -158,7 +155,6 @@ client.on("chat", async (channel, user, message, self) => {
                     }) 
                 }).on('end', function (err) {
                     if (err) return console.log('connection closed due to errors', err);
-                    console.log('end');
                 });
             } else {
                 setTimeout(function () {
@@ -186,7 +182,6 @@ client.on("chat", async (channel, user, message, self) => {
                     })
                 }).on('end', function (err) {
                     if (err) return console.log('connection closed due to errors', err);
-                    console.log('end');
                 });
             } else {
                 setTimeout(function () {
@@ -219,7 +214,6 @@ client.on("chat", async (channel, user, message, self) => {
                     })
                 }).on('end', function (err) {
                     if (err) return console.log('connection closed due to errors', err);
-                    console.log('end');
                 });
             } else {
                 setTimeout(function () {
@@ -243,7 +237,6 @@ client.on("chat", async (channel, user, message, self) => {
                 })
             }).on('end', function (err) {
                 if (err) return console.log('connection closed due to errors', err);
-                console.log('end');
             });
         }
         if(command == "starter") { //https://www.youtube.com/watch?v=2JPVJIn98B4
