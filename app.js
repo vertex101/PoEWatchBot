@@ -21,7 +21,7 @@ setInterval(function() {
 
 let options = {
     options: {
-        debug: true
+        debug: false
     },
     connection: {
         reconnect: true,
@@ -276,10 +276,27 @@ client.on("chat", async (channel, user, message, self) => {
                 client.say(channel, 
                     "CoC Ice Nova Assassin" +
                     " ▬▬▬▬▬▬▬▬▬ஜ۩۞۩ஜ▬▬▬▬▬▬▬▬▬" +
-                    " currently running https://www.youtube.com/watch?v=UqC4WM7am20 <-- by Esoro" +
-                    " and working torwards https://www.youtube.com/watch?v=lgBaGtv2w6s <-- by Zenn" +
+                    " currently running https://www.youtube.com/watch?v=eiXS1qDY5UI <-- by Personal Jeezus" +
                     " the PoB is in the video descriptions")
             }, 3000);
         }
     }
 });
+/* client.on("redeem", async (channel, username, rewardtype, tags, msg) => {
+    if(msg.includes('Rarity: ')) {
+        if(msg.includes('Rarity: Unique')){
+            //TODO: add in message for not allowing unique items
+        } else {
+            let newMSG = msg.split(" ")
+            let getItem = Buffer.from(msg);
+            let itemData = getItem.toString('base64');
+            console.log(newMSG)
+            console.log(itemData)
+            request('https://www.poeprices.info/api?l=' + newLeague + '&i=' + itemData).on('data', function (response) {
+                console.log(response)
+            }).on('end', function (err) {
+                if (err) return console.log('connection closed due to errors', err);
+            });
+        }
+    }
+}) */
