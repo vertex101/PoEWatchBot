@@ -1,6 +1,7 @@
 const tmi = require('tmi.js');
 const request = require('requests');
 const fs = require('fs');
+require('dotenv').config()
 
 var prefix = "!";
 var newLeague = "Ritual";
@@ -17,7 +18,7 @@ setInterval(function() {
     }).on('end', function (err) {
         if (err) return console.log('connection closed due to errors', err);
     });
-}, 3000);
+}, 300000);
 
 let options = {
     options: {
@@ -250,20 +251,12 @@ client.on("chat", async (channel, user, message, self) => {
         }
     }
     if(user.username == "vertex101") {
-/*         if(command == "vso") {
-            if(args[0]) {
-                request({ url: 'https://api.twitch.tv/kraken/users?login=' + args[0].toLowerCase(), headers: { 'Accept': 'application/vnd.twitchtv.v5+json', 'Client-ID': process.env.idClient}}, function (error, response, body) {
-                    pullData = JSON.parse(body);
-                    request({ url: 'https://api.twitch.tv/kraken/channels/' + pullData.users[0]._id, headers: { 'Accept': 'application/vnd.twitchtv.v5+json', 'Client-ID': process.env.idClient}}, function (error, response, body) {
-                        pullData = JSON.parse(body);
-                        setTimeout(function () {
-                            client.say(channel, "You should 100% check out " + pullData.display_name + "! You can find them," +
-                            " here >> https://twitch.tv/" + pullData.name + " <3 They were last playing >> " + pullData.game + "!")
-                        }, 3000);
-                    });
-                });
-            }
-        } */
+        if(command == "btime") {
+            let time = process.uptime();
+            let upTime = new Date(time * 1000).toISOString().substr(11, 8);
+            let getTime = upTime.split(":");
+            client.say(channel, "The bot has been running for " + getTime[0] + " hours " + getTime[1] + " minutes " + getTime[2] + " seconds")
+        }
         if(command == "bpop") { //
             setTimeout(function () {
                 client.say(channel, "Bane POP build by mbXtreme https://www.youtube.com/watch?v=RDJqEdWqdAE the PoB is in the video description")
