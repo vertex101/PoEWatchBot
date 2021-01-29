@@ -1,11 +1,35 @@
 const tmi = require('tmi.js');
 const request = require('requests');
 const fs = require('fs');
-require('dotenv').config()
+require('dotenv').config();
 
 var prefix = "!";
 var newLeague = "Ritual";
 let chaosPrice = "";
+
+const modList = [];
+
+//getting current chaos price for commands
+request('https://poe.ninja/api/data/currencyoverview?league=' + newLeague + '&type=Currency').on('data', function (response) {
+    pullData = JSON.parse(response);
+    pullData.lines.forEach(function (chaos) {
+        if(chaos.currencyTypeName == "Exalted Orb") {
+            chaosPrice = chaos.receive.value
+        }
+    })
+}).on('end', function (err) {
+    if (err) return console.log('connection closed due to errors', err);
+});
+//getting mods for list
+request('https://modlookup.3v.fi/api/user-v3/vertex101?limit=2000&cursor=').on('data', function(response) {
+    modList = []
+    getMods = JSON.parse(response);
+    getMods.channels.forEach(function(mods) {
+        modList.push(mods.name)
+    });
+}).on('end', function (err) {
+    if (err) return console.log('connection closed due to errors', err);
+});
 
 setInterval(function() {
     request('https://poe.ninja/api/data/currencyoverview?league=' + newLeague + '&type=Currency').on('data', function (response) {
@@ -15,6 +39,15 @@ setInterval(function() {
                 chaosPrice = chaos.receive.value
             }
         })
+    }).on('end', function (err) {
+        if (err) return console.log('connection closed due to errors', err);
+    });
+    request('https://modlookup.3v.fi/api/user-v3/vertex101?limit=2000&cursor=').on('data', function(response) {
+        modList = []
+        getMods = JSON.parse(response);
+        getMods.channels.forEach(function(mods) {
+            modList.push(mods.name)
+        });
     }).on('end', function (err) {
         if (err) return console.log('connection closed due to errors', err);
     });
@@ -52,13 +85,12 @@ client.on("connected", async (address, port) => {
 });
 client.on("chat", async (channel, user, message, self) => {
     if (self) return;
-
     if(message.indexOf(prefix) !== 0) return;
     const args = message.slice(prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
     if(user.username == channel.replace("#", "") ||  user.mod || user.username == "vertex101"){
         if(command == "cmds") {
-            if(channel == "#finncapp") {
+            if(modList.includes(channel.replace("#", ""))) {
                 client.say(channel, "Current Commands: !ex, !hunter, !doc, !mirror, !round, !chaos, !exc, !sim, !starter")
             } else {
                 setTimeout(function () {
@@ -71,7 +103,7 @@ client.on("chat", async (channel, user, message, self) => {
                 pullData = JSON.parse(response);
                 pullData.lines.forEach(function (ex) {
                     if(ex.currencyTypeName == "Exalted Orb") {
-                        if(channel == "#finncapp") {
+                        if(modList.includes(channel.replace("#", ""))) {
                             client.say(channel, "1 Exalted Orb is equal to " + ex.receive.value.toFixed(2) + " Chaos")
                         } else {
                             setTimeout(function () {
@@ -89,7 +121,7 @@ client.on("chat", async (channel, user, message, self) => {
                 pullData = JSON.parse(response);
                 pullData.lines.forEach(function (hunt) {
                     if(hunt.name == "Headhunter") {
-                        if(channel == "#finncapp") {
+                        if(modList.includes(channel.replace("#", ""))) {
                             client.say(channel, "HeadHunter is worth " + hunt.exaltedValue + "ex")
                         } else {
                             setTimeout(function () {
@@ -107,7 +139,7 @@ client.on("chat", async (channel, user, message, self) => {
                 pullData = JSON.parse(response);
                 pullData.lines.forEach(function (doc) {
                     if(doc.name == "The Doctor") {
-                        if(channel == "#finncapp") {
+                        if(modList.includes(channel.replace("#", ""))) {
                             client.say(channel, "The Doctor is worth " + doc.exaltedValue + "ex")
                         } else {
                             setTimeout(function () {
@@ -125,7 +157,7 @@ client.on("chat", async (channel, user, message, self) => {
                 pullData = JSON.parse(response);
                 pullData.lines.some(function (mir) {
                     if(mir.currencyTypeName == "Mirror of Kalandra") {
-                        if(channel == "#finncapp" || channel == "#vertex101") { 
+                        if(modList.includes(channel.replace("#", ""))) { 
                             client.say(channel, "Mirror of Kalandra is worth " + Math.round(mir.receive.value / chaosPrice) + " exalts")
                         } else {
                             setTimeout(function () {
@@ -145,7 +177,7 @@ client.on("chat", async (channel, user, message, self) => {
                     pullData.lines.forEach(function (round) {
                         if(round.currencyTypeName == "Exalted Orb") {
                             var cTotal = (round.receive.value * Number("0." + args[0] + "0"))
-                            if(channel == "#finncapp") {
+                            if(modList.includes(channel.replace("#", ""))) {
                                 client.say(channel, "0." + args[0] + "ex is " + Math.round(cTotal) + "c")
                             } else {
                                 setTimeout(function () {
@@ -158,9 +190,13 @@ client.on("chat", async (channel, user, message, self) => {
                     if (err) return console.log('connection closed due to errors', err);
                 });
             } else {
-                setTimeout(function () {
+                if(modList.includes(channel.replace("#", ""))) {
                     client.say(channel, "Usage: !round [1-9]")
-                }, 3000);
+                } else {
+                    setTimeout(function () {
+                        client.say(channel, "Usage: !round [1-9]")
+                    }, 3000);
+                }
             }
         }
         if(command == "chaos") {
@@ -172,7 +208,7 @@ client.on("chat", async (channel, user, message, self) => {
                             var cTotal = (Number(args[0]) / chaos.receive.value)
                             var getOdds = cTotal.toFixed(2).split('.')
                             var cChaos = (chaos.receive.value * Number("0." + getOdds[1]))
-                            if(channel == "#finncapp") {
+                            if(modList.includes(channel.replace("#", ""))) {
                                 client.say(channel, args[0]+"c = " + getOdds[0] + "ex " + Math.round(cChaos) + "c")
                             } else {
                                 setTimeout(function () {
@@ -185,9 +221,13 @@ client.on("chat", async (channel, user, message, self) => {
                     if (err) return console.log('connection closed due to errors', err);
                 });
             } else {
-                setTimeout(function () {
+                if(modList.includes(channel.replace("#", ""))) {
                     client.say(channel, "Usage: !chaos [amount]")
-                }, 3000);
+                } else {
+                    setTimeout(function () {
+                        client.say(channel, "Usage: !chaos [amount]")
+                    }, 3000);
+                }
             }
         }
         if(command == "exc") {
@@ -204,7 +244,7 @@ client.on("chat", async (channel, user, message, self) => {
                                 var cTotal = (Number(args[0]) * exc.receive.value)
                                 var getOdds = 0
                             }
-                            if(channel == "#finncapp") {
+                            if(modList.includes(channel.replace("#", ""))) {
                                 client.say(channel, args[0]+"ex = " + Math.round(cTotal + getOdds) + "c")
                             } else {
                                 setTimeout(function () {
@@ -217,9 +257,13 @@ client.on("chat", async (channel, user, message, self) => {
                     if (err) return console.log('connection closed due to errors', err);
                 });
             } else {
-                setTimeout(function () {
+                if(modList.includes(channel.replace("#", ""))) {
                     client.say(channel, "Usage: !exc [amount]")
-                }, 3000);
+                } else {
+                    setTimeout(function () {
+                        client.say(channel, "Usage: !exc [amount]")
+                    }, 3000);
+                }
             }
         }
         if(command == "sim") {
@@ -227,7 +271,7 @@ client.on("chat", async (channel, user, message, self) => {
                 pullData = JSON.parse(response);
                 pullData.lines.forEach(function (sim) {
                     if(sim.currencyTypeName == "Simulacrum") {
-                        if(channel == "#finncapp") {
+                        if(modList.includes(channel.replace("#", ""))) {
                             client.say(channel, "Simulacrum is equal to " + Math.round(sim.receive.value) + " Chaos")
                         } else {
                             setTimeout(function () {
@@ -241,7 +285,7 @@ client.on("chat", async (channel, user, message, self) => {
             });
         }
         if(command == "starter") { //https://www.youtube.com/watch?v=2JPVJIn98B4
-            if(channel == "#finncapp") {
+            if(modList.includes(channel.replace("#", ""))) {
                 client.say(channel, "New to PoE (Path of Exile) go here https://www.youtube.com/watch?v=2JPVJIn98B4 and watch Beginner Guide + Zizaran's Tips and Tricks")
             } else {
                 setTimeout(function () {
@@ -255,20 +299,16 @@ client.on("chat", async (channel, user, message, self) => {
             client.say(channel, "The bot has been running for " + secondsToDhms(process.uptime()))
         }
         if(command == "bpop") { //
-            setTimeout(function () {
-                client.say(channel, "Bane POP build by mbXtreme https://www.youtube.com/watch?v=RDJqEdWqdAE the PoB is in the video description")
-            }, 3000);
+            client.say(channel, "Bane POP build by mbXtreme https://www.youtube.com/watch?v=RDJqEdWqdAE the PoB is in the video description")
         }
     }
     if(channel == "#finncapp") {
         if(command == "coc") { 
-            setTimeout(function () {
-                client.say(channel, 
-                    "CoC Ice Nova Assassin" +
-                    " ▬▬▬▬▬▬▬▬▬ஜ۩۞۩ஜ▬▬▬▬▬▬▬▬▬" +
-                    " currently running https://www.youtube.com/watch?v=eiXS1qDY5UI <-- by Personal Jeezus" +
-                    " the PoB is in the video descriptions")
-            }, 3000);
+            client.say(channel, 
+                "CoC Ice Nova Assassin" +
+                " ▬▬▬▬▬▬▬▬▬ஜ۩۞۩ஜ▬▬▬▬▬▬▬▬▬" +
+                " currently running https://www.youtube.com/watch?v=eiXS1qDY5UI <-- by Personal Jeezus" +
+                " the PoB is in the video descriptions")
         }
         if(command == "awakened") {
             client.say(channel, 
