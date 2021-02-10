@@ -319,24 +319,6 @@ client.on("chat", async (channel, user, message, self) => {
         }
     }
 });
-/* client.on("redeem", async (channel, username, rewardtype, tags, msg) => {
-    if(msg.includes('Rarity: ')) {
-        if(msg.includes('Rarity: Unique')){
-            //TODO: add in message for not allowing unique items
-        } else {
-            let newMSG = msg.split(" ")
-            let getItem = Buffer.from(msg);
-            let itemData = getItem.toString('base64');
-            console.log(newMSG)
-            console.log(itemData)
-            request('https://www.poeprices.info/api?l=' + newLeague + '&i=' + itemData).on('data', function (response) {
-                console.log(response)
-            }).on('end', function (err) {
-                if (err) return console.log('connection closed due to errors', err);
-            });
-        }
-    }
-}) */
 
 function secondsToDhms(seconds) {
     seconds = Number(seconds);
