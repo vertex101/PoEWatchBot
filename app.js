@@ -104,10 +104,10 @@ client.on("chat", async (channel, user, message, self) => {
                 pullData.lines.forEach(function (ex) {
                     if(ex.currencyTypeName == "Exalted Orb") {
                         if(modList.includes(channel.replace("#", ""))) {
-                            client.say(channel, "1 Exalted Orb is equal to " + ex.receive.value + " Chaos")
+                            client.say(channel, "1 Exalted Orb is equal to " + Math.round(ex.receive.value) + " Chaos")
                         } else {
                             setTimeout(function () {
-                                client.say(channel, "1 Exalted Orb is equal to " + ex.receive.value + " Chaos")
+                                client.say(channel, "1 Exalted Orb is equal to " + Math.round(ex.receive.value) + " Chaos")
                             }, 3000);
                         }
                     }
