@@ -134,6 +134,24 @@ client.on("chat", async (channel, user, message, self) => {
                 if (err) return console.log('connection closed due to errors', err);
             });
         }
+        if(command == "tabby") {
+            request('https://poe.ninja/api/data/itemoverview?league=' + newLeague + '&type=UniqueArmour').on('data', function (response) {
+                pullData = JSON.parse(response);
+                pullData.lines.forEach(function (hunt) {
+                    if(hunt.name == "Tabula Rasa") {
+                        if(modList.includes(channel.replace("#", ""))) {
+                            client.say(channel, "Tabula Rasa is worth " + hunt.chaosValue + "c")
+                        } else {
+                            setTimeout(function () {
+                                client.say(channel, "Tabula Rasa is worth " + hunt.chaosValue + "c")
+                            }, 3000);  
+                        }
+                    }
+                })
+            }).on('end', function (err) {
+                if (err) return console.log('connection closed due to errors', err);
+            });
+        }
         if(command == "doc") {
             request('https://poe.ninja/api/data/itemoverview?league=' + newLeague + '&type=DivinationCard').on('data', function (response) {
                 pullData = JSON.parse(response);
