@@ -91,10 +91,10 @@ client.on("chat", async (channel, user, message, self) => {
     if(user.username == channel.replace("#", "") ||  user.mod || user.username == "vertex101"){
         if(command == "cmds") {
             if(modList.includes(channel.replace("#", ""))) {
-                client.say(channel, "Current Commands: !ex, !hunter, !doc, !mirror, !round, !chaos, !exc, !sim, !starter")
+                client.say(channel, "Current Commands: !ex, !hunter, !tabby, !doc, !mirror, !round, !chaos, !exc, !sim, !starter")
             } else {
                 setTimeout(function () {
-                    client.say(channel, "Current Commands: !ex, !hunter, !doc, !mirror, !round, !chaos, !exc, !sim, !starter")
+                    client.say(channel, "Current Commands: !ex, !hunter, !tabby, !doc, !mirror, !round, !chaos, !exc, !sim, !starter")
                 }, 3000); 
             }
         }
