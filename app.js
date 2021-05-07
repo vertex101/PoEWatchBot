@@ -88,7 +88,7 @@ client.on("chat", async (channel, user, message, self) => {
     if(message.indexOf(prefix) !== 0) return;
     const args = message.slice(prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
-    if(user.username == channel.replace("#", "") ||  user.mod || user.username == "vertex101" || user.username == "akynaShark" || user.subscriber){
+    if(user.username == channel.replace("#", "") ||  user.mod || user.username == "vertex101" || user.username == "akynashark" || user.subscriber){
         if(command == "cmd") {
             if(modList.includes(channel.replace("#", ""))) {
                 client.say(channel, "Current Commands: !ex, !hunter, !tabby, !doc, !mirror, !round, !chaos, !exc, !sim, !starter")
