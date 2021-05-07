@@ -207,7 +207,7 @@ client.on("chat", async (channel, user, message, self) => {
                 }).on('end', function (err) {
                     if (err) return console.log('connection closed due to errors', err);
                 });
-            } else if(args[0] >= 10 || args[0] == 0) {
+            } else if(int(args[0]) >= 10 || int(args[0]) == 0) {
                 if(modList.includes(channel.replace("#", ""))) {
                     client.say(channel, "Usage: !round [1-9]")
                 } else {
