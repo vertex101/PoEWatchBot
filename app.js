@@ -189,7 +189,15 @@ client.on("chat", async (channel, user, message, self) => {
             });
         }
         if(command == "round") {
-            if(args[0]) {
+            if(Number(args[0]) >= 10 || Number(args[0]) == 0) {
+                if(modList.includes(channel.replace("#", ""))) {
+                    client.say(channel, "Usage: !round [1-9]")
+                } else {
+                    setTimeout(function () {
+                        client.say(channel, "Usage: !round [1-9]")
+                    }, 3000);
+                }
+            } else if(args[0]) {
                 request('https://poe.ninja/api/data/currencyoverview?league=' + newLeague + '&type=Currency').on('data', function (response) {
                     pullData = JSON.parse(response);
                     pullData.lines.forEach(function (round) {
@@ -207,14 +215,6 @@ client.on("chat", async (channel, user, message, self) => {
                 }).on('end', function (err) {
                     if (err) return console.log('connection closed due to errors', err);
                 });
-            } else if(Number(args[0]) >= 10 || Number(args[0]) == 0) {
-                if(modList.includes(channel.replace("#", ""))) {
-                    client.say(channel, "Usage: !round [1-9]")
-                } else {
-                    setTimeout(function () {
-                        client.say(channel, "Usage: !round [1-9]")
-                    }, 3000);
-                }
             } else {
                 if(modList.includes(channel.replace("#", ""))) {
                     client.say(channel, "Usage: !round [1-9]")
