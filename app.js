@@ -8,6 +8,7 @@ var newLeague = "Ultimatum";
 let chaosPrice = "";
 
 const modList = [];
+const approvedList = ["vertex101", "akynashark"]
 
 //getting current chaos price for commands
 request('https://poe.ninja/api/data/currencyoverview?league=' + newLeague + '&type=Currency').on('data', function (response) {
@@ -88,7 +89,7 @@ client.on("chat", async (channel, user, message, self) => {
     if(message.indexOf(prefix) !== 0) return;
     const args = message.slice(prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
-    if(user.username == channel.replace("#", "") ||  user.mod || user.username == "vertex101" || user.username == "akynashark" || user.subscriber){
+    if(user.username == channel.replace("#", "") ||  user.mod || approvedList.includes(user.username) || user.subscriber){
         if(command == "cmd") {
             if(modList.includes(channel.replace("#", ""))) {
                 client.say(channel, "Current Commands: !ex, !hunter, !tabby, !doc, !mirror, !round, !chaos, !exc, !sim, !starter")
@@ -329,13 +330,6 @@ client.on("chat", async (channel, user, message, self) => {
         }
     }
     if(channel == "#finncapp") {
-        if(command == "coc") { 
-            client.say(channel, 
-                "CoC Ice Nova Assassin" +
-                " ▬▬▬▬▬▬▬▬▬ஜ۩۞۩ஜ▬▬▬▬▬▬▬▬▬" +
-                " currently running https://www.youtube.com/watch?v=eiXS1qDY5UI <-- by Personal Jeezus" +
-                " the PoB is in the video descriptions")
-        }
         if(command == "awakened") {
             client.say(channel, 
                 "Awakened PoE Trade" +
