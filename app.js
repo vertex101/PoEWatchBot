@@ -88,8 +88,8 @@ client.on("chat", async (channel, user, message, self) => {
     if(message.indexOf(prefix) !== 0) return;
     const args = message.slice(prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
-    if(user.username == channel.replace("#", "") ||  user.mod || user.username == "vertex101" || user.subscriber){
-        if(command == "cmds") {
+    if(user.username == channel.replace("#", "") ||  user.mod || user.username == "vertex101" || user.username == "akynaShark" || user.subscriber){
+        if(command == "cmd") {
             if(modList.includes(channel.replace("#", ""))) {
                 client.say(channel, "Current Commands: !ex, !hunter, !tabby, !doc, !mirror, !round, !chaos, !exc, !sim, !starter")
             } else {
@@ -207,6 +207,14 @@ client.on("chat", async (channel, user, message, self) => {
                 }).on('end', function (err) {
                     if (err) return console.log('connection closed due to errors', err);
                 });
+            } else if(args[0] > 9 || args[0] == 0) {
+                if(modList.includes(channel.replace("#", ""))) {
+                    client.say(channel, "Usage: !round [1-9]")
+                } else {
+                    setTimeout(function () {
+                        client.say(channel, "Usage: !round [1-9]")
+                    }, 3000);
+                }
             } else {
                 if(modList.includes(channel.replace("#", ""))) {
                     client.say(channel, "Usage: !round [1-9]")
