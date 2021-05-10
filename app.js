@@ -7,7 +7,7 @@ var prefix = "?";
 var newLeague = "Ultimatum";
 let chaosPrice = "";
 
-const modList = [];
+const modList = ["finncapp", "vertex101"];
 const approvedList = ["vertex101", "akynashark"]
 
 //getting current chaos price for commands
@@ -22,7 +22,7 @@ request('https://poe.ninja/api/data/currencyoverview?league=' + newLeague + '&ty
     if (err) return console.log('connection closed due to errors', err);
 });
 //getting mods for list
-request('https://modlookup.3v.fi/api/user-v3/notvertex101?limit=2000&cursor=').on('data', function(response) {
+/* request('https://modlookup.3v.fi/api/user-v3/notvertex101?limit=2000&cursor=').on('data', function(response) {
     modList.length = 0
     getMods = JSON.parse(response);
     getMods.channels.forEach(function(mods) {
@@ -30,7 +30,7 @@ request('https://modlookup.3v.fi/api/user-v3/notvertex101?limit=2000&cursor=').o
     });
 }).on('end', function (err) {
     if (err) return console.log('connection closed due to errors', err);
-});
+}); */
 
 setInterval(function() {
     request('https://poe.ninja/api/data/currencyoverview?league=' + newLeague + '&type=Currency').on('data', function (response) {
@@ -43,7 +43,7 @@ setInterval(function() {
     }).on('end', function (err) {
         if (err) return console.log('connection closed due to errors', err);
     });
-    request('https://modlookup.3v.fi/api/user-v3/vertex101?limit=2000&cursor=').on('data', function(response) {
+/*     request('https://modlookup.3v.fi/api/user-v3/vertex101?limit=2000&cursor=').on('data', function(response) {
         modList.length = 0
         getMods = JSON.parse(response);
         getMods.channels.forEach(function(mods) {
@@ -51,7 +51,7 @@ setInterval(function() {
         });
     }).on('end', function (err) {
         if (err) return console.log('connection closed due to errors', err);
-    });
+    }); */
 }, 300000);
 
 let options = {
