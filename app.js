@@ -3,7 +3,7 @@ const request = require('requests');
 const fs = require('fs');
 require('dotenv').config();
 
-var prefix = "!";
+var prefix = "?";
 var newLeague = "Ultimatum";
 let chaosPrice = "";
 
@@ -92,10 +92,10 @@ client.on("chat", async (channel, user, message, self) => {
     if(user.username == channel.replace("#", "") ||  user.mod || approvedList.includes(user.username) || user.subscriber){
         if(command == "cmd") {
             if(modList.includes(channel.replace("#", ""))) {
-                client.say(channel, "Current Commands: !ex, !hunter, !tabby, !doc, !mirror, !round, !chaos, !exc, !sim, !starter")
+                client.say(channel, "Current Commands: ?ex, ?hunter, ?tabby, ?doc, ?house ?mirror, ?round, ?chaos, ?exc, ?sim, ?starter")
             } else {
                 setTimeout(function () {
-                    client.say(channel, "Current Commands: !ex, !hunter, !tabby, !doc, !mirror, !round, !chaos, !exc, !sim, !starter")
+                    client.say(channel, "Current Commands: ?ex, ?hunter, ?tabby, ?doc, ?mirror, ?round, ?chaos, ?exc, ?sim, ?starter")
                 }, 3000); 
             }
         }
@@ -171,6 +171,24 @@ client.on("chat", async (channel, user, message, self) => {
                 if (err) return console.log('connection closed due to errors', err);
             });
         }
+        if(command == "house") {
+            request('https://poe.ninja/api/data/itemoverview?league=' + newLeague + '&type=DivinationCard').on('data', function (response) {
+                pullData = JSON.parse(response);
+                pullData.lines.forEach(function (doc) {
+                    if(doc.name == "House of Mirrors") {
+                        if(modList.includes(channel.replace("#", ""))) {
+                            client.say(channel, "House of Mirrors is worth " + doc.exaltedValue + "ex")
+                        } else {
+                            setTimeout(function () {
+                                client.say(channel, "House of Mirrors is worth " + doc.exaltedValue + "ex")
+                            }, 3000);
+                        }
+                    }
+                })
+            }).on('end', function (err) {
+                if (err) return console.log('connection closed due to errors', err);
+            });
+        }
         if(command == "mirror") {
             request('https://poe.ninja/api/data/currencyoverview?league=' + newLeague + '&type=Currency').on('data', function (response) {
                 pullData = JSON.parse(response);
@@ -192,10 +210,10 @@ client.on("chat", async (channel, user, message, self) => {
         if(command == "round") {
             if(Number(args[0]) >= 10 || Number(args[0]) == 0) {
                 if(modList.includes(channel.replace("#", ""))) {
-                    client.say(channel, "Usage: !round [1-9]")
+                    client.say(channel, "Usage: ?round [1-9]")
                 } else {
                     setTimeout(function () {
-                        client.say(channel, "Usage: !round [1-9]")
+                        client.say(channel, "Usage: ?round [1-9]")
                     }, 3000);
                 }
             } else if(args[0]) {
@@ -218,10 +236,10 @@ client.on("chat", async (channel, user, message, self) => {
                 });
             } else {
                 if(modList.includes(channel.replace("#", ""))) {
-                    client.say(channel, "Usage: !round [1-9]")
+                    client.say(channel, "Usage: ?round [1-9]")
                 } else {
                     setTimeout(function () {
-                        client.say(channel, "Usage: !round [1-9]")
+                        client.say(channel, "Usage: ?round [1-9]")
                     }, 3000);
                 }
             }
@@ -249,10 +267,10 @@ client.on("chat", async (channel, user, message, self) => {
                 });
             } else {
                 if(modList.includes(channel.replace("#", ""))) {
-                    client.say(channel, "Usage: !chaos [amount]")
+                    client.say(channel, "Usage: ?chaos [amount]")
                 } else {
                     setTimeout(function () {
-                        client.say(channel, "Usage: !chaos [amount]")
+                        client.say(channel, "Usage: ?chaos [amount]")
                     }, 3000);
                 }
             }
@@ -285,10 +303,10 @@ client.on("chat", async (channel, user, message, self) => {
                 });
             } else {
                 if(modList.includes(channel.replace("#", ""))) {
-                    client.say(channel, "Usage: !exc [amount]")
+                    client.say(channel, "Usage: ?exc [amount]")
                 } else {
                     setTimeout(function () {
-                        client.say(channel, "Usage: !exc [amount]")
+                        client.say(channel, "Usage: ?exc [amount]")
                     }, 3000);
                 }
             }
