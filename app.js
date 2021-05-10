@@ -22,7 +22,7 @@ request('https://poe.ninja/api/data/currencyoverview?league=' + newLeague + '&ty
     if (err) return console.log('connection closed due to errors', err);
 });
 //getting mods for list
-request('https://modlookup.3v.fi/api/user-v3/vertex101?limit=2000&cursor=').on('data', function(response) {
+request('https://modlookup.3v.fi/api/user-v3/notvertex101?limit=2000&cursor=').on('data', function(response) {
     modList.length = 0
     getMods = JSON.parse(response);
     getMods.channels.forEach(function(mods) {
