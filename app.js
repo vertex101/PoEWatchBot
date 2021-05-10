@@ -343,9 +343,6 @@ client.on("chat", async (channel, user, message, self) => {
         if(command == "btime") {
             client.say(channel, "The bot has been running for " + secondsToDhms(process.uptime()))
         }
-        if(command == "bpop") { //
-            client.say(channel, "Bane POP build by mbXtreme https://www.youtube.com/watch?v=RDJqEdWqdAE the PoB is in the video description")
-        }
     }
     if(channel == "#finncapp") {
         if(command == "awakened") {
