@@ -338,6 +338,15 @@ client.on("chat", async (channel, user, message, self) => {
                 }, 3000);
             }
         }
+        if(command == "uni") { //https://www.youtube.com/playlist?list=PLbpExg9_Xax0rWolbI639z4MqizyiLy6I
+            if(modList.includes(channel.replace("#", ""))) {
+                client.say(channel, "New to PoE (Path of Exile) go here https://www.youtube.com/playlist?list=PLbpExg9_Xax0rWolbI639z4MqizyiLy6I and watch PoE University by Zizaran")
+            } else {
+                setTimeout(function () {
+                    client.say(channel, "New to PoE (Path of Exile) go here https://www.youtube.com/playlist?list=PLbpExg9_Xax0rWolbI639z4MqizyiLy6I and watch PoE University by Zizaran")
+                }, 3000);
+            }
+        }
     }
     if(user.username == "vertex101") {
         if(command == "btime") {
