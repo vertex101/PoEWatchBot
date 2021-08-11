@@ -1,7 +1,7 @@
 {
-  "channelsketch": "#sketch",
-  "channelfinncapp": "#finncapp",
-  "channelthatkhornguy": "#thatkhornguy",
+  "channelsketch": "sketch",
+  "channelfinncapp": "finncapp",
+  "channelthatkhornguy": "thatkhornguy",
   "channelkaytrim": "kaytrim",
   "channelzintaris": "zintaris",
   "channelmikecheckgaming": "mikecheckgaming",
@@ -9,5 +9,5 @@
   "channelbohica24": "bohica24",
   "channellunascan": "lunascan",
   "channelslothmonster": "slothmonster",
-  "channelbalormage": "balormage"
+  "channelelderofwoe": "elderofwoe"
 }
