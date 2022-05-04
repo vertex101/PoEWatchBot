@@ -9,6 +9,9 @@ let chaosPrice = "";
 
 const modList = ["finncapp", "vertex101"];
 const approvedList = ["vertex101", "akynashark"]
+const badWordList = ["nick.gurs"]
+
+//loading of bad word list
 
 //getting current chaos price for commands
 request('https://poe.ninja/api/data/currencyoverview?league=' + newLeague + '&type=Currency').on('data', function (response) {
@@ -68,6 +71,7 @@ let options = {
     },
     channels: ["#vertex101"]
 };
+
 let client = new tmi.client(options);
 // Connect the client to the server..
 client.connect();
@@ -84,8 +88,16 @@ client.on("connected", async (address, port) => {
         }
     });
 });
+
 client.on("chat", async (channel, user, message, self) => {
     if (self) return;
+
+    if(channel == "finncapp") { 
+        //
+        const getWord = message.split(" ")
+        
+    }
+
     if(message.indexOf(prefix) !== 0) return;
     const args = message.slice(prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
@@ -360,6 +372,13 @@ client.on("chat", async (channel, user, message, self) => {
                 " ▬▬▬▬▬▬▬▬▬ஜ۩۞۩ஜ▬▬▬▬▬▬▬▬▬" +
                 " go check it out here over at github" +
                 " https://github.com/SnosMe/awakened-poe-trade")
+        }
+    }
+    if(channel == "#jordankgames") {
+        if(user.username == "vertex101") {
+            if(command == "vso") {
+                client.say(channel, "You should 100% check out " + args[1] + "! You can find them, here >> https://twitch.tv/" + args[1] + "!")
+            }
         }
     }
 });
