@@ -9,7 +9,6 @@ let chaosPrice = "";
 
 const modList = ["finncapp", "vertex101"];
 const approvedList = ["vertex101", "akynashark"]
-const badWordList = ["nick.gurs"]
 
 //loading of bad word list
 
