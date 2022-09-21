@@ -17,9 +17,9 @@
   },
   "homepage": "https://github.com/vertex101/PoEWatchBot#readme",
   "dependencies": {
-    "cheerio": "^1.0.0-rc.5",
-    "dotenv": "^8.6.0",
+    "cheerio": "^1.0.0-rc.12",
+    "dotenv": "^16.0.2",
     "requests": "^0.3.0",
-    "tmi.js": "^1.7.1"
+    "tmi.js": "^1.8.5"
   }
 }
