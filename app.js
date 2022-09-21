@@ -4,7 +4,7 @@ const fs = require('fs');
 require('dotenv').config();
 
 var prefix = "?";
-var newLeague = "Sentinel";
+var newLeague = "Kalandra";
 let chaosPrice = "";
 
 const modList = ["finncapp", "vertex101"];
@@ -16,7 +16,7 @@ const approvedList = ["vertex101", "akynashark"]
 request('https://poe.ninja/api/data/currencyoverview?league=' + newLeague + '&type=Currency').on('data', function (response) {
     pullData = JSON.parse(response);
     pullData.lines.forEach(function (chaos) {
-        if(chaos.currencyTypeName == "Exalted Orb") {
+        if(chaos.currencyTypeName == "Divine Orb") {
             chaosPrice = chaos.receive.value
         }
     })
@@ -33,28 +33,6 @@ request('https://poe.ninja/api/data/currencyoverview?league=' + newLeague + '&ty
 }).on('end', function (err) {
     if (err) return console.log('connection closed due to errors', err);
 }); */
-
-setInterval(function() {
-    request('https://poe.ninja/api/data/currencyoverview?league=' + newLeague + '&type=Currency').on('data', function (response) {
-        pullData = JSON.parse(response);
-        pullData.lines.forEach(function (chaos) {
-            if(chaos.currencyTypeName == "Exalted Orb") {
-                chaosPrice = chaos.receive.value
-            }
-        })
-    }).on('end', function (err) {
-        if (err) return console.log('connection closed due to errors', err);
-    });
-/*     request('https://modlookup.3v.fi/api/user-v3/vertex101?limit=2000&cursor=').on('data', function(response) {
-        modList.length = 0
-        getMods = JSON.parse(response);
-        getMods.channels.forEach(function(mods) {
-            modList.push(mods.name)
-        });
-    }).on('end', function (err) {
-        if (err) return console.log('connection closed due to errors', err);
-    }); */
-}, 300000);
 
 let options = {
     options: {
@@ -114,12 +92,12 @@ client.on("chat", async (channel, user, message, self) => {
             request('https://poe.ninja/api/data/currencyoverview?league=' + newLeague + '&type=Currency').on('data', function (response) {
                 pullData = JSON.parse(response);
                 pullData.lines.forEach(function (ex) {
-                    if(ex.currencyTypeName == "Exalted Orb") {
+                    if(ex.currencyTypeName == "Divine Orb") {
                         if(modList.includes(channel.replace("#", ""))) {
-                            client.say(channel, "1 Exalted Orb is equal to " + Math.round(ex.receive.value) + " Chaos")
+                            client.say(channel, "1 Divine Orb is equal to " + Math.round(ex.receive.value) + " Chaos")
                         } else {
                             setTimeout(function () {
-                                client.say(channel, "1 Exalted Orb is equal to " + Math.round(ex.receive.value) + " Chaos")
+                                client.say(channel, "1 Divine Orb is equal to " + Math.round(ex.receive.value) + " Chaos")
                             }, 3000);
                         }
                     }
@@ -134,10 +112,10 @@ client.on("chat", async (channel, user, message, self) => {
                 pullData.lines.forEach(function (hunt) {
                     if(hunt.name == "Headhunter") {
                         if(modList.includes(channel.replace("#", ""))) {
-                            client.say(channel, "HeadHunter is worth " + hunt.exaltedValue + "ex")
+                            client.say(channel, "HeadHunter is worth " + hunt.divineValue + " divines")
                         } else {
                             setTimeout(function () {
-                                client.say(channel, "HeadHunter is worth " + hunt.exaltedValue + "ex")
+                                client.say(channel, "HeadHunter is worth " + hunt.divineValue + " divines")
                             }, 3000);  
                         }
                     }
@@ -170,10 +148,10 @@ client.on("chat", async (channel, user, message, self) => {
                 pullData.lines.forEach(function (doc) {
                     if(doc.name == "The Doctor") {
                         if(modList.includes(channel.replace("#", ""))) {
-                            client.say(channel, "The Doctor is worth " + doc.exaltedValue + "ex")
+                            client.say(channel, "The Doctor is worth " + doc.divineValue + " divines")
                         } else {
                             setTimeout(function () {
-                                client.say(channel, "The Doctor is worth " + doc.exaltedValue + "ex")
+                                client.say(channel, "The Doctor is worth " + doc.divineValue + " divines")
                             }, 3000);
                         }
                     }
@@ -188,10 +166,10 @@ client.on("chat", async (channel, user, message, self) => {
                 pullData.lines.forEach(function (doc) {
                     if(doc.name == "House of Mirrors") {
                         if(modList.includes(channel.replace("#", ""))) {
-                            client.say(channel, "House of Mirrors is worth " + doc.exaltedValue + "ex")
+                            client.say(channel, "House of Mirrors is worth " + doc.divineValue + " divines")
                         } else {
                             setTimeout(function () {
-                                client.say(channel, "House of Mirrors is worth " + doc.exaltedValue + "ex")
+                                client.say(channel, "House of Mirrors is worth " + doc.divineValue + " divines")
                             }, 3000);
                         }
                     }
@@ -206,10 +184,10 @@ client.on("chat", async (channel, user, message, self) => {
                 pullData.lines.some(function (mir) {
                     if(mir.currencyTypeName == "Mirror of Kalandra") {
                         if(modList.includes(channel.replace("#", ""))) { 
-                            client.say(channel, "Mirror of Kalandra is worth " + Math.round(mir.receive.value / chaosPrice) + " exalts")
+                            client.say(channel, "Mirror of Kalandra is worth " + Math.round(mir.receive.value / chaosPrice) + " divines")
                         } else {
                             setTimeout(function () {
-                                client.say(channel, "Mirror of Kalandra is worth " + Math.round(mir.receive.value / chaosPrice) + " exalts")
+                                client.say(channel, "Mirror of Kalandra is worth " + Math.round(mir.receive.value / chaosPrice) + " divines")
                             }, 3000); 
                         }
                     }
@@ -231,13 +209,13 @@ client.on("chat", async (channel, user, message, self) => {
                 request('https://poe.ninja/api/data/currencyoverview?league=' + newLeague + '&type=Currency').on('data', function (response) {
                     pullData = JSON.parse(response);
                     pullData.lines.forEach(function (round) {
-                        if(round.currencyTypeName == "Exalted Orb") {
+                        if(round.currencyTypeName == "Divine Orb") {
                             var cTotal = (round.receive.value * Number("0." + args[0] + "0"))
                             if(modList.includes(channel.replace("#", ""))) {
-                                client.say(channel, "0." + args[0] + "ex is " + Math.round(cTotal) + "c")
+                                client.say(channel, "0." + args[0] + " divine is " + Math.round(cTotal) + "c")
                             } else {
                                 setTimeout(function () {
-                                    client.say(channel, "0." + args[0] + "ex is " + Math.round(cTotal) + "c")
+                                    client.say(channel, "0." + args[0] + " divine is " + Math.round(cTotal) + "c")
                                 }, 3000);
                             }
                         }
@@ -260,15 +238,15 @@ client.on("chat", async (channel, user, message, self) => {
                 request('https://poe.ninja/api/data/currencyoverview?league=' + newLeague + '&type=Currency').on('data', function (response) {
                     pullData = JSON.parse(response);
                     pullData.lines.forEach(function (chaos) {
-                        if(chaos.currencyTypeName == "Exalted Orb") {
+                        if(chaos.currencyTypeName == "Divine Orb") {
                             var cTotal = (Number(args[0]) / chaos.receive.value)
                             var getOdds = cTotal.toFixed(2).split('.')
                             var cChaos = (chaos.receive.value * Number("0." + getOdds[1]))
                             if(modList.includes(channel.replace("#", ""))) {
-                                client.say(channel, args[0]+"c = " + getOdds[0] + "ex " + Math.round(cChaos) + "c")
+                                client.say(channel, args[0]+"c = " + getOdds[0] + " divines " + Math.round(cChaos) + "c")
                             } else {
                                 setTimeout(function () {
-                                    client.say(channel, args[0]+"c = " + getOdds[0] + "ex " + Math.round(cChaos) + "c")
+                                    client.say(channel, args[0]+"c = " + getOdds[0] + " divines " + Math.round(cChaos) + "c")
                                 }, 3000); 
                             }
                         }
@@ -291,7 +269,7 @@ client.on("chat", async (channel, user, message, self) => {
                 request('https://poe.ninja/api/data/currencyoverview?league=' + newLeague + '&type=Currency').on('data', function (response) {
                     pullData = JSON.parse(response);
                     pullData.lines.forEach(function (exc) {
-                        if(exc.currencyTypeName == "Exalted Orb") {
+                        if(exc.currencyTypeName == "Divine Orb") {
                             if(args[0].includes('.')) {
                                 var getARG = args[0].split('.')
                                 var cTotal = (Number(getARG[0]) * exc.receive.value)
@@ -301,10 +279,10 @@ client.on("chat", async (channel, user, message, self) => {
                                 var getOdds = 0
                             }
                             if(modList.includes(channel.replace("#", ""))) {
-                                client.say(channel, args[0]+"ex = " + Math.round(cTotal + getOdds) + "c")
+                                client.say(channel, args[0]+" divines = " + Math.round(cTotal + getOdds) + "c")
                             } else {
                                 setTimeout(function () {
-                                    client.say(channel, args[0]+"ex = " + Math.round(cTotal + getOdds) + "c")
+                                    client.say(channel, args[0]+" divines = " + Math.round(cTotal + getOdds) + "c")
                                 }, 3000); 
                             }
                         }
