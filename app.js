@@ -4,7 +4,7 @@ const fs = require('fs');
 require('dotenv').config();
 
 var prefix = "?";
-var newLeague = "Kalandra";
+var newLeague = "Sanctum";
 let chaosPrice = "";
 
 const modList = ["finncapp", "vertex101"];
